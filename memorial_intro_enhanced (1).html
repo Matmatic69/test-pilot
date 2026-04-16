@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Créer un Mémorial Éternel - Souvenir QR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: 
+                radial-gradient(ellipse at 30% 20%, #1a1a3e 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 80%, #1a2a3e 0%, transparent 40%),
+                linear-gradient(to bottom, #000000 0%, #0a0a1f 50%, #000510 100%);
+        }
+
+        /* Canvas pour les particules */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Cercles transcendants avec profondeur 3D */
+        .sacred-geometry {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            perspective: 1000px;
+        }
+
+        .circle {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: expandFade3D 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        .circle:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            animation-delay: 0s;
+            border-color: rgba(255, 215, 150, 0.3);
+        }
+
+        .circle:nth-child(2) {
+            width: 240px;
+            height: 240px;
+            animation-delay: 0.8s;
+            border-color: rgba(200, 180, 255, 0.25);
+        }
+
+        .circle:nth-child(3) {
+            width: 360px;
+            height: 360px;
+            animation-delay: 1.6s;
+            border-color: rgba(150, 200, 255, 0.2);
+        }
+
+        .circle:nth-child(4) {
+            width: 480px;
+            height: 480px;
+            animation-delay: 2.4s;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .circle:nth-child(5) {
+            width: 600px;
+            height: 600px;
+            animation-delay: 3.2s;
+            border-color: rgba(255, 215, 150, 0.1);
+        }
+
+        @keyframes expandFade3D {
+            0% {
+                transform: scale(0.2) rotateX(0deg) rotateY(0deg);
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.8) rotateX(180deg) rotateY(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Nébuleuse en arrière-plan */
+        .nebula {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(75, 0, 130, 0.12) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(72, 61, 139, 0.08) 0%, transparent 60%);
+            animation: nebulaFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes nebulaFloat {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Galaxie lointaine */
+        .galaxy {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            top: 20%;
+            right: 15%;
+            background: radial-gradient(ellipse at center, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(200, 180, 255, 0.05) 30%, 
+                transparent 70%);
+            border-radius: 50%;
+            animation: rotateGalaxy 60s linear infinite;
+            z-index: 1;
+            filter: blur(2px);
+        }
+
+        @keyframes rotateGalaxy {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Conteneur principal du contenu */
+        .content-wrapper {
+            position: absolute;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+            opacity: 0;
+            animation: fadeInContent 2s ease-in-out 1s forwards;
+        }
+
+        @keyframes fadeInContent {
+            to { opacity: 1; }
+        }
+
+        /* Titre principal */
+        .main-title {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 215, 150, 0.8);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 215, 150, 0.6);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(255, 215, 150, 1);
+            }
+        }
+
+        .subtitle {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Section des étapes */
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.6s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInStep 1s ease-in-out forwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 2s; }
+        .step:nth-child(2) { animation-delay: 2.3s; }
+        .step:nth-child(3) { animation-delay: 2.6s; }
+
+        @keyframes fadeInStep {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 215, 150, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 215, 150, 0.2);
+        }
+
+        .step-number {
+            font-size: 42px;
+            font-weight: 300;
+            color: rgba(255, 215, 150, 0.9);
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 215, 150, 0.5);
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Message de réconfort */
+        .comfort-message {
+            font-size: 18px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 40px 0;
+            line-height: 1.8;
+            padding: 0 40px;
+        }
+
+        /* Bouton d'entrée amélioré */
+        .enter-button {
+            position: relative;
+            padding: 22px 60px;
+            font-size: 18px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 150, 0.4);
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(15px);
+            transition: all 0.5s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInButton 1.5s ease-in-out 3s forwards;
+            margin-top: 30px;
+            font-family: 'Georgia', serif;
+        }
+
+        @keyframes fadeInButton {
+            to { opacity: 1; }
+        }
+
+        .enter-button:hover {
+            background: rgba(255, 215, 150, 0.15);
+            border-color: rgba(255, 215, 150, 0.8);
+            box-shadow: 0 0 40px rgba(255, 215, 150, 0.6);
+            transform: scale(1.05);
+            letter-spacing: 4px;
+        }
+
+        .enter-button::before {
+            content: '✨';
+            position: absolute;
+            left: 30px;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .enter-button::after {
+            content: '✨';
+            position: absolute;
+            right: 30px;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .enter-button:hover::before,
+        .enter-button:hover::after {
+            opacity: 1;
+        }
+
+        /* Rayons de lumière doux */
+        .light-ray {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent, 
+                rgba(255, 255, 255, 0.1) 30%, 
+                rgba(255, 215, 150, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 70%,
+                transparent);
+            top: 0;
+            left: 50%;
+            transform-origin: top;
+            animation: rotateRay 30s linear infinite;
+            z-index: 1;
+            filter: blur(2px);
+        }
+
+        .light-ray:nth-child(1) { animation-delay: 0s; }
+        .light-ray:nth-child(2) { animation-delay: -7.5s; }
+        .light-ray:nth-child(3) { animation-delay: -15s; }
+        .light-ray:nth-child(4) { animation-delay: -22.5s; }
+
+        @keyframes rotateRay {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Étoiles scintillantes */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .star.small {
+            width: 1px;
+            height: 1px;
+        }
+
+        .star.medium {
+            width: 2px;
+            height: 2px;
+        }
+
+        .star.large {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Étoiles filantes */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            z-index: 2;
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-300px, 300px);
+                opacity: 0;
+            }
+        }
+
+        /* Overlay de transition */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 1) 0%, 
+                rgba(255, 240, 200, 0.9) 30%, 
+                rgba(255, 215, 150, 0.7) 60%,
+                transparent 100%);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+        }
+
+        .transition-text {
+            font-size: 32px;
+            color: rgba(0, 0, 0, 0.7);
+            letter-spacing: 4px;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 32px;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .steps-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step {
+                max-width: 90%;
+            }
+
+            .comfort-message {
+                font-size: 16px;
+                padding: 0 20px;
+            }
+
+            .enter-button {
+                padding: 18px 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Nébuleuse -->
+        <div class="nebula"></div>
+        
+        <!-- Galaxie lointaine -->
+        <div class="galaxy"></div>
+
+        <!-- Rayons de lumière doux -->
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+
+        <!-- Étoiles -->
+        <div class="stars" id="stars"></div>
+        <div id="shooting-stars"></div>
+
+        <!-- Canvas pour particules -->
+        <canvas id="particles-canvas"></canvas>
+
+        <!-- Géométrie sacrée -->
+        <div class="sacred-geometry">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="content-wrapper">
+            <h1 class="main-title">Un Lieu de Souvenir Éternel</h1>
+            <p class="subtitle">
+                Créons ensemble un espace sacré pour honorer la mémoire de votre proche
+            </p>
+
+            <!-- Étapes du processus -->
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Racontez son histoire</div>
+                    <div class="step-description">
+                        Partagez les moments précieux, les qualités qui le/la caractérisaient
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Ajoutez vos souvenirs</div>
+                    <div class="step-description">
+                        Photos, vidéos, anecdotes... Tout ce qui fait revivre sa mémoire
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Personnalisez l'hommage</div>
+                    <div class="step-description">
+                        Choisissez l'ambiance, les couleurs, pour un mémorial unique
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message de réconfort -->
+            <p class="comfort-message">
+                « Nous sommes là pour vous accompagner, pas à pas, avec douceur et respect.<br>
+                Prenez tout le temps nécessaire. Chaque souvenir compte. »
+            </p>
+
+            <!-- Bouton d'entrée -->
+            <button class="enter-button" onclick="enterMemorial()">
+                Commencer
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay de transition -->
+    <div class="transition-overlay" id="transition">
+        <div class="transition-text">Préparation de votre espace sacré...</div>
+    </div>
+
+    <script>
+        // Création des étoiles variées
+        const starsContainer = document.getElementById('stars');
+        const starSizes = ['small', 'small', 'small', 'medium', 'medium', 'large'];
+        
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            const size = starSizes[Math.floor(Math.random() * starSizes.length)];
+            star.className = `star ${size}`;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (2 + Math.random() * 3) + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Création des étoiles filantes
+        function createShootingStar() {
+            const shootingStarsContainer = document.getElementById('shooting-stars');
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.left = (Math.random() * 100) + '%';
+            shootingStar.style.top = (Math.random() * 50) + '%';
+            shootingStar.style.animation = 'shootingStar 1.5s ease-out forwards';
+            shootingStarsContainer.appendChild(shootingStar);
+
+            setTimeout(() => {
+                shootingStar.remove();
+            }, 1500);
+        }
+
+        // Étoile filante toutes les 3-8 secondes
+        setInterval(() => {
+            if (Math.random() > 0.5) {
+                createShootingStar();
+            }
+        }, 3000 + Math.random() * 5000);
+
+        // Système de particules avancé
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.color = this.getRandomColor();
+            }
+
+            getRandomColor() {
+                const colors = [
+                    'rgba(255, 255, 255',
+                    'rgba(255, 240, 200',
+                    'rgba(255, 215, 150',
+                    'rgba(200, 180, 255'
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Attraction douce vers le centre
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const dx = centerX - this.x;
+                const dy = centerY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance > 150) {
+                    this.x += dx * 0.00008;
+                    this.y += dy * 0.00008;
+                }
+
+                // Oscillation douce
+                this.x += Math.sin(Date.now() * 0.001) * 0.05;
+                this.y += Math.cos(Date.now() * 0.001) * 0.05;
+
+                if (this.x < 0 || this.x > canvas.width || 
+                    this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = `${this.color}, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Connexions subtiles entre particules proches
+                particles.forEach(particle => {
+                    const dx = this.x - particle.x;
+                    const dy = this.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        const opacity = 0.08 * (1 - distance / 120);
+                        ctx.strokeStyle = `rgba(255, 215, 150, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(this.x, this.y);
+                        ctx.lineTo(particle.x, particle.y);
+                        ctx.stroke();
+                    }
+                });
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Redimensionnement
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Fonction d'entrée au mémorial avec effet lumineux
+        function enterMemorial() {
+            const overlay = document.getElementById('transition');
+            overlay.classList.add('active');
+
+            // Son de transition (optionnel)
+            // const audio = new Audio('transition-sound.mp3');
+            // audio.play();
+
+            setTimeout(() => {
+                // Redirection vers la page de création
+                window.location.href = '/create';
+                // OU si c'est sur le même domaine
+                // window.location.href = 'https://souvenir-qr.com/create';
+            }, 2500);
+        }
+
+        // Effet parallaxe sur les étoiles au scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const stars = document.getElementById('stars');
+            if (stars) {
+                stars.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Effet de curseur lumineux
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            // Créer une particule de lumière au passage de la souris
+            if (Math.random() > 0.9) {
+                const lightTrail = document.createElement('div');
+                lightTrail.style.position = 'fixed';
+                lightTrail.style.left = mouseX + 'px';
+                lightTrail.style.top = mouseY + 'px';
+                lightTrail.style.width = '4px';
+                lightTrail.style.height = '4px';
+                lightTrail.style.background = 'rgba(255, 215, 150, 0.6)';
+                lightTrail.style.borderRadius = '50%';
+                lightTrail.style.pointerEvents = 'none';
+                lightTrail.style.zIndex = '5';
+                lightTrail.style.animation = 'fadeOut 1s ease-out forwards';
+                document.body.appendChild(lightTrail);
+
+                setTimeout(() => {
+                    lightTrail.remove();
+                }, 1000);
+            }
+        });
+
+        // Animation CSS pour la traînée
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: scale(2);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

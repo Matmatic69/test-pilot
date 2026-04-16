@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Crawl budget hints
+Crawl-delay: 1
+
+Sitemap: https://souvenir-qr.com/sitemap.xml
+Disallow: /preview-new.html
+Disallow: /*?step=*
+Disallow: /test/
+
+# Explicit allow for OpenAI crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /

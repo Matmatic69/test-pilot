@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mémorial - Souvenir QR</title>
+    <meta name="description" content="Page mémorial personnalisée avec QR code. Consultez photos, vidéos et hommages de vos proches disparus. Mémoire numérique éternelle et sécurisée.">
+    <meta name="keywords" content="memorial numerique, page memorial, qr code memorial, souvenir numerique, hommage digital, memoire eternelle">
+    <link rel="canonical" href="https://souvenir-qr.com/memorial.html">
+    <meta name="robots" content="index,follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #5A7D7C;
+            --color-primary-dark: #4C6A69;
+            --color-secondary: #EAE7E2;
+            --color-text: #555555;
+            --color-text-dark: #333333;
+            --color-surface: #F9F7F3;
+            --color-surface-alt: #FFFFFF;
+            --color-border: #DCD9D4;
+            --font-body: 'Lato', sans-serif;
+            --font-heading: 'Lora', serif;
+        }
+
+        body.memorial-page {
+            font-family: var(--font-body);
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            margin: 0;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- Theme: Serein (Default) --- */
+        body[data-theme='elegant'] { /* 'elegant' is now 'serene' */
+            --color-primary: #5A7D7C;
+            --color-text: #555555;
+            --color-text-dark: #333333;
+            --color-surface: #F9F7F3;
+            --color-border: #DCD9D4;
+        }
+
+        /* --- Theme: Sombre --- */
+        body[data-theme='dark'] {
+            --color-primary: #86A2B1;
+            --color-text: #c9d1d9;
+            --color-text-dark: #f0f6fc;
+            --color-surface: #1c2128;
+            --color-surface-alt: #2d333b;
+            --color-border: #444c56;
+        }
+
+        /* --- Theme: Or --- */
+        body[data-theme='gold'] {
+            --color-primary: #c5a35b;
+            --color-text: #6c584c;
+            --color-text-dark: #5a3a22;
+            --color-surface: #fdfaf6;
+            --color-surface-alt: #ffffff;
+            --color-border: #e9e2d9;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--color-text-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .memorial-container {
+            max-width: none;
+            margin: 0 auto;
+            padding: 0; /* Full width layout */
+        }
+
+        /* --- Hero Section --- */
+        .memorial-hero {
+            position: relative;
+            text-align: center;
+            padding: 6rem 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            background-color: var(--color-surface-alt);
+        }
+
+        .memorial-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .memorial-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .memorial-name {
+            font-size: 3.5rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .memorial-dates {
+            font-size: 1.1rem;
+            margin: 0.5rem 0 1.5rem;
+            opacity: 0.8;
+        }
+
+        .memorial-quote {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- Content Sections --- */
+        .memorial-section {
+            margin-bottom: 4rem;
+        }
+
+        .memorial-section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 2rem;
+        }
+
+        .memorial-biography {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        /* --- Gallery --- */
+        .memorial-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* --- Videos --- */
+        .memorial-videos {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .memorial-video {
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        .memorial-video video {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .memorial-photo {
+            width: 100%;
+            aspect-ratio: auto;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+        }
+
+        .memorial-photo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            transition: none;
+        }
+
+        .memorial-photo:hover img {
+            transform: none;
+        }
+
+        /* --- Timeline --- */
+        .memorial-timeline {
+            border-left: 2px solid var(--color-border);
+            padding-left: 2rem;
+        }
+
+        .memorial-timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+
+        .memorial-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.25rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+            border: 3px solid var(--color-primary);
+        }
+
+        .memorial-timeline-date {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--color-text-dark);
+        }
+
+        .memorial-timeline-event {
+            font-size: 1rem;
+        }
+        
+    </style>
+</head>
+<body class="memorial-page" data-theme="elegant">
+
+    <div class="memorial-container">
+        <!-- Hero Section -->
+        <section class="memorial-hero">
+            <div class="memorial-hero-bg" id="heroBg"></div>
+            <div class="memorial-hero-content">
+                <h1 class="memorial-name" id="memorialName">Prénom Nom</h1>
+                <div class="memorial-dates" id="memorialDates">1 Janvier 1950 - 1 Janvier 2024</div>
+                <p class="memorial-quote" id="memorialQuote">"Une citation mémorable ici."</p>
+            </div>
+        </section>
+
+        <!-- Biography Section -->
+        <section class="memorial-section" id="biographySection">
+            <h2 class="memorial-section-title">Son histoire</h2>
+            <div class="memorial-biography" id="memorialBiography">
+                <p>Ceci est un exemple de biographie.</p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="memorial-section" id="gallerySection">
+            <h2 class="memorial-section-title">Galerie de souvenirs</h2>
+            <div class="memorial-gallery" id="memorialGallery">
+                <!-- Photos will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section class="memorial-section" id="videoSection">
+            <h2 class="memorial-section-title">Vidéos</h2>
+            <div class="memorial-videos" id="memorialVideos">
+                <!-- Videos will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Anecdote Section -->
+        <section class="memorial-section" id="anecdoteSection">
+            <h2 class="memorial-section-title">Une anecdote spéciale</h2>
+            <div class="memorial-biography" id="memorialAnecdote">
+                <p>Aucune anecdote renseignée.</p>
+            </div>
+        </section>
+
+        <!-- Personality Section -->
+        <section class="memorial-section" id="personalitySection">
+            <h2 class="memorial-section-title">Sa personnalité</h2>
+            <div class="memorial-timeline" id="memorialPersonality">
+                <!-- Personality traits will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section class="memorial-section" id="locationSection">
+            <h2 class="memorial-section-title">Ses origines</h2>
+            <div class="memorial-biography" id="memorialLocation">
+                <p>Lieu de naissance non renseigné.</p>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="memorial-section" id="timelineSection">
+            <h2 class="memorial-section-title">Moments importants</h2>
+            <div class="memorial-timeline" id="memorialTimeline">
+                <!-- Timeline items will be dynamically inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        function setTheme(theme) {
+            const themeValue = theme === 'elegant' ? 'serene' : theme;
+            document.body.setAttribute('data-theme', themeValue);
+        }
+
+        function setTypography(font) {
+            const fontMap = {
+                'serif': "'Lora', serif",
+                'sans': "'Lato', sans-serif"
+            };
+            document.documentElement.style.setProperty('--font-heading', fontMap[font] || fontMap['serif']);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function renderMemorial(data) {
+            if (!data) return;
+
+            // Apply customization
+            if (data.customization) {
+                if (data.customization.theme) setTheme(data.customization.theme);
+                if (data.customization.typography) setTypography(data.customization.typography);
+            }
+
+            // --- Populate Hero ---
+            document.getElementById('memorialName').textContent = data.name || 'Prénom Nom';
+            document.getElementById('memorialDates').textContent = `${formatDate(data.birthdate)} - ${formatDate(data.deathdate)}`;
+            const quoteEl = document.getElementById('memorialQuote');
+            if (data.quote) {
+                quoteEl.textContent = `"${data.quote}"`;
+                quoteEl.style.display = 'block';
+            } else {
+                quoteEl.style.display = 'none';
+            }
+
+            // --- Populate Biography ---
+            const bioEl = document.getElementById('memorialBiography');
+            if (data.message) {
+                bioEl.innerHTML = `<p>${data.message.replace(/\n/g, '</p><p>')}</p>`;
+                document.getElementById('biographySection').style.display = 'block';
+            } else {
+                document.getElementById('biographySection').style.display = 'none';
+            }
+
+            // --- Populate Gallery ---
+            const galleryEl = document.getElementById('memorialGallery');
+            if (data.photoUrls && data.photoUrls.length > 0) {
+                galleryEl.innerHTML = ''; // Clear placeholders
+                data.photoUrls.forEach(url => {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'memorial-photo';
+                    photoDiv.innerHTML = `<img src="${url}" alt="Souvenir">`;
+                    galleryEl.appendChild(photoDiv);
+                });
+                document.getElementById('gallerySection').style.display = 'block';
+            } else {
+                document.getElementById('gallerySection').style.display = 'none';
+            }
+
+            // --- Populate Videos ---
+            const videosWrap = document.getElementById('memorialVideos');
+            if (data.videoUrls && data.videoUrls.length > 0) {
+                videosWrap.innerHTML = '';
+                data.videoUrls.forEach(vurl => {
+                    const v = document.createElement('div');
+                    v.className = 'memorial-video';
+                    v.innerHTML = `<video controls preload="metadata" src="${vurl}"></video>`;
+                    videosWrap.appendChild(v);
+                });
+                document.getElementById('videoSection').style.display = 'block';
+            } else {
+                document.getElementById('videoSection').style.display = 'none';
+            }
+
+            // --- Populate Anecdote ---
+            const anecdoteEl = document.getElementById('memorialAnecdote');
+            if (data.anecdote && data.anecdote.trim()) {
+                anecdoteEl.innerHTML = `<p>${data.anecdote.replace(/\n/g, '</p><p>')}</p>`;
+                document.getElementById('anecdoteSection').style.display = 'block';
+            } else {
+                document.getElementById('anecdoteSection').style.display = 'none';
+            }
+
+            // --- Populate Personality ---
+            const personalityEl = document.getElementById('memorialPersonality');
+            if (data.selectedTraits && data.selectedTraits.length > 0) {
+                personalityEl.innerHTML = '';
+                data.selectedTraits.forEach(trait => {
+                    const traitDiv = document.createElement('div');
+                    traitDiv.className = 'memorial-timeline-item';
+                    const traitEmojis = {
+                        'généreux': '💝',
+                        'courageux': '🦁',
+                        'bienveillant': '🤗',
+                        'passionné': '🔥',
+                        'sage': '🦉',
+                        'drôle': '😄',
+                        'créatif': '🎨',
+                        'déterminé': '💪'
+                    };
+                    traitDiv.innerHTML = `
+                        <div class="memorial-timeline-date">${traitEmojis[trait] || '✨'}</div>
+                        <div class="memorial-timeline-event">${trait.charAt(0).toUpperCase() + trait.slice(1)}</div>
+                    `;
+                    personalityEl.appendChild(traitDiv);
+                });
+                document.getElementById('personalitySection').style.display = 'block';
+            } else {
+                document.getElementById('personalitySection').style.display = 'none';
+            }
+
+            // --- Populate Location ---
+            const locationEl = document.getElementById('memorialLocation');
+            if (data.birthplace && data.birthplace.trim()) {
+                locationEl.innerHTML = `<p>📍 Lieu de naissance: <strong>${data.birthplace}</strong></p>`;
+                document.getElementById('locationSection').style.display = 'block';
+            } else {
+                document.getElementById('locationSection').style.display = 'none';
+            }
+
+            // --- Populate Timeline ---
+            const timelineEl = document.getElementById('memorialTimeline');
+            if (data.timeline && data.timeline.length > 0) {
+                timelineEl.innerHTML = ''; // Clear placeholders
+                data.timeline.forEach(item => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = 'memorial-timeline-item';
+                    eventDiv.innerHTML = `
+                        <div class="memorial-timeline-date">${item.date}</div>
+                        <div class="memorial-timeline-event">${item.event}</div>
+                    `;
+                    timelineEl.appendChild(eventDiv);
+                });
+                document.getElementById('timelineSection').style.display = 'block';
+            } else {
+                 document.getElementById('timelineSection').style.display = 'none';
+            }
+            
+            // --- Set Hero Background ---
+            const heroBg = document.getElementById('heroBg');
+            if (data.bannerUrl) {
+                heroBg.style.backgroundImage = `url(${data.bannerUrl})`;
+            } else if (data.photoUrls && data.photoUrls[0]) {
+                heroBg.style.backgroundImage = `url(${data.photoUrls[0]})`;
+            } else {
+                heroBg.style.backgroundImage = 'none';
+            }
+        }
+
+        async function loadMemorial() {
+            const params = new URLSearchParams(window.location.search);
+            const memorialId = params.get('id');
+
+            if (!memorialId) {
+                document.getElementById('memorialName').textContent = 'Mémorial non trouvé.';
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "souvenirs", memorialId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    console.log('Données chargées:', data); // Debug
+                    document.title = `Mémorial pour ${data.name}`;
+                    renderMemorial(data);
+                } else {
+                    document.getElementById('memorialName').textContent = 'Ce mémorial n\'existe pas.';
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement:', error);
+                document.getElementById('memorialName').textContent = 'Erreur lors du chargement du mémorial.';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMemorial);
+    </script>
+  <script src="/js/internal-linking.js"></script>
+</body>
+</html>

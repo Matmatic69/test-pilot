@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Souvenir - Souvenir QR</title>
+    <meta name="description" content="Créez un mémorial numérique digne et durable, puis recevez votre QR code physique à apposer sur la sépulture. Assistance IA, galerie photos/vidéos, mode privé protégé par mot de passe.">
+    <meta name="keywords" content="creer memorial numerique, commander qr code tombe, achat plaque qr funeraire, creation memorial en ligne, acheter qr code">
+    <link rel="canonical" href="https://souvenir-qr.com/create.html">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#5A7D7C">
+    <link rel="icon" href="/icone/souvenir-qr-logomark.svg" type="image/svg+xml">
+    <link rel="icon" href="/icone/souvenir-qr-favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/icone/souvenir-qr-favicon-16.png" sizes="16x16" type="image/png">
+    <link rel="apple-touch-icon" href="/icone/souvenir-qr-favicon-180.png" sizes="180x180">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/icone/souvenir-qr-logomark.svg" color="#5A7D7C">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;600&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17199486103"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-17199486103');
+    </script>
+    <!-- Google Ads conversion send_to label (fourni) -->
+    <script>
+      // Utilisé par js/create.js pour envoyer l'événement conversion
+      // Remplacé ici par le label partagé: xQNNCIXFkaQbEJeprYlA
+      window.ADS_CONVERSION_SEND_TO = 'AW-17199486103/xQNNCIXFkaQbEJeprYlA';
+    </script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="Créer un Souvenir – Souvenir QR">
+    <meta property="og:description" content="Construisez pas à pas un mémorial numérique et recevez votre QR code physique pour honorer vos proches.">
+    <meta property="og:url" content="https://souvenir-qr.com/create.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://souvenir-qr.com/235.png">
+    <meta property="og:locale" content="fr_FR">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Créer un Souvenir – Souvenir QR">
+    <meta name="twitter:description" content="Mémorial numérique + QR code physique. Assistance IA, galerie photos/vidéos, mode privé.">
+    <meta name="twitter:image" content="https://souvenir-qr.com/235.png">
+    <style>
+        :root { --vh: 1vh; }
+        html, body { margin: 0; padding: 0; min-height: calc(var(--vh, 1vh) * 100); height: auto; background: transparent; overflow-x: hidden; }
+        body { overscroll-behavior-y: contain; }
+        body.create-page { background: transparent; }
+        body.modal-open { overflow: hidden; height: calc(var(--vh, 1vh) * 100); }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lora', serif;
+            color: var(--color-text-dark);
+            font-weight: 600;
+        }
+
+        /* --- DEBUT: Navigation & Structure --- */
+        .create-nav {
+            background-color: var(--color-surface-alt);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: padding .25s ease, background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+
+        /* Minimized header on scroll */
+        .create-nav > *:not(.tiny-progress) { transition: opacity .22s ease, transform .22s ease; }
+        .create-nav.min {
+            background: transparent;
+            border-bottom-color: transparent;
+            padding: .5rem 1rem;
+            box-shadow: none;
+        }
+        .create-nav.min > *:not(.tiny-progress) { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+        .tiny-progress {
+            display: none;
+            position: fixed;
+            top: 10px;
+            right: 12px;
+            z-index: 101;
+            background: rgba(255,255,255,0.92);
+            color: var(--color-text-dark);
+            border: 1px solid var(--color-border);
+            padding: .25rem .55rem;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: .85rem;
+            letter-spacing: .5px;
+            box-shadow: 0 8px 22px rgba(0,0,0,.12);
+            backdrop-filter: blur(4px);
+        }
+        .create-nav.min .tiny-progress { display: inline-flex; align-items: center; gap: .3rem; }
+
+        /* Header title and mobile steps: hidden by default (desktop shows full steps-indicator) */
+        .nav-title { display: none; }
+        .mobile-steps { display: none; }
+
+        .back-link {
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: .25rem 0;
+        }
+
+        .back-link:hover {
+            color: var(--color-primary-dark);
+        }
+
+        .steps-indicator {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .steps-indicator .step {
+            color: var(--color-text);
+            opacity: 0.6;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .steps-indicator .step.active {
+            opacity: 1;
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .form-container {
+            max-width: 1400px; /* Largeur finale augmentée */
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .form-section {
+            display: none;
+            animation: sectionFadeIn 0.8s ease-out;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes sectionFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin: 0 0 0.5rem;
+        }
+
+        .section-header .section-number {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        /* --- FIN: Navigation & Structure --- */
+
+        /* --- DEBUT: Form Elements --- */
+        .input-group {
+            margin-bottom: 2.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            background-color: var(--color-surface-alt);
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: var(--color-text-dark);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; /* Important for consistent sizing */
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(90, 125, 124, 0.15);
+        }
+
+        /* Swipe hint pill (step 3) */
+        .mobile-scroll-hint {
+            position: sticky;
+            top: 76px;
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            background: linear-gradient(90deg, #ffe08a, #ffc857, #ffe08a);
+            background-size: 300% 300%;
+            border: 2px solid rgba(231, 184, 72, .8);
+            color: #4a3a12;
+            padding: .85rem 1.2rem;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 1.08rem;
+            box-shadow: 0 12px 26px rgba(0,0,0,.14), 0 0 0 2px rgba(231, 184, 72, .25) inset;
+            z-index: 5;
+            margin-bottom: 1rem;
+            width: fit-content;
+            cursor: pointer;
+            user-select: none;
+            animation: colorSlide 8s linear infinite, hintPulse 3s ease-in-out infinite, hintGlow 4s ease-in-out infinite;
+            overflow: hidden;
+        }
+        .mobile-scroll-hint::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(120deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, rgba(255,255,255,.35) 100%);
+            background-size: 200% 100%;
+            animation: shine 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes hintPulse { 0%, 100% { transform: translateZ(0) scale(1); } 50% { transform: translateZ(0) scale(1.02); } }
+        @keyframes colorSlide { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes hintGlow { 0%, 100% { box-shadow: 0 12px 26px rgba(0,0,0,.14), 0 0 0 2px rgba(231, 184, 72, .25) inset; } 50% { box-shadow: 0 16px 32px rgba(0,0,0,.18), 0 0 0 3px rgba(231, 184, 72, .35) inset; } }
+        @keyframes shine { 0% { background-position: -50% 0; } 50% { background-position: 150% 0; } 100% { background-position: -50% 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            .mobile-scroll-hint { animation: none; }
+            .mobile-scroll-hint::after { animation: none; }
+        }
+        .mobile-scroll-hint .hand,
+        .mobile-scroll-hint .arrow {
+            display: inline-block;
+            will-change: transform, opacity;
+        }
+        .mobile-scroll-hint .hand {
+            animation: swipe-left 1.8s ease-in-out infinite;
+        }
+        .mobile-scroll-hint .arrow {
+            animation: arrow-pulse 1.6s ease-in-out infinite;
+        }
+        .mobile-scroll-hint .arrow-left {
+            animation: arrow-pulse-left 1.6s ease-in-out infinite;
+        }
+        @keyframes swipe-left {
+            0% { transform: translateX(0); opacity: .85; }
+            40% { transform: translateX(-12px); opacity: 1; }
+            70% { transform: translateX(-12px); opacity: 1; }
+            100% { transform: translateX(0); opacity: .85; }
+        }
+        @keyframes arrow-pulse {
+            0%, 100% { transform: translateX(0); opacity: .6; }
+            40% { transform: translateX(6px); opacity: 1; }
+            60% { transform: translateX(6px); opacity: 1; }
+        }
+        @keyframes arrow-pulse-left {
+            0%, 100% { transform: translateX(0); opacity: .6; }
+            40% { transform: translateX(-6px); opacity: 1; }
+            60% { transform: translateX(-6px); opacity: 1; }
+        }
+        @media (min-width: 900px) {
+            .mobile-scroll-hint { top: 92px; }
+        }
+
+        /* Highlight invalid fields (custom validation) */
+        .input-error {
+            border-color: #e74c3c !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15) !important;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .date-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* CTA emphasis */
+        .btn-cta {
+            background: linear-gradient(90deg, #5A7D7C, #86A2B1, #5A7D7C);
+            background-size: 200% 200%;
+            color: #fff;
+            border: none;
+            box-shadow: 0 8px 22px rgba(90,125,124,0.35);
+            animation: ctaGradient 6s ease infinite, glowPulse 2.5s ease-in-out infinite;
+            font-weight: 800;
+            letter-spacing: .3px;
+        }
+        .btn-cta:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 26px rgba(90,125,124,0.45);
+        }
+        @keyframes ctaGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes glowPulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.08); } }
+
+        /* CTA subtext */
+        .cta-subtext {
+            width: 100%;
+            text-align: center;
+            margin-top: .5rem;
+            font-size: .9rem;
+            color: var(--color-text);
+            opacity: .85;
+            padding: 0 .5rem;
+            overflow-wrap: anywhere;
+        }
+
+        .btn-secondary {
+            background-color: var(--color-surface-alt);
+            color: var(--color-text-dark);
+            border-color: var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-secondary);
+            border-color: #ccc;
+        }
+        /* Enhance actions buttons & small icon */
+        .enhance-actions { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin-top:.5rem; }
+        .btn-ghost { background: transparent; color: var(--color-text-dark); border-color: var(--color-border); }
+        .btn-ghost:hover { background: var(--color-surface); }
+        .btn-download { display:inline-flex; align-items:center; gap:.4rem; padding: 0.6rem 1rem; }
+        .btn-download svg { width: 18px; height: 18px; stroke: currentColor; }
+        /* --- FIN: Form Elements --- */
+
+        /* --- DEBUT: Custom Form Components --- */
+        .label-with-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .label-with-action label {
+            margin-bottom: 0; /* Override default margin */
+        }
+
+        .ai-buttons-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-ai {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-ai.btn-primary {
+             background-color: var(--color-accent);
+             border-color: var(--color-accent);
+        }
+        .btn-ai.btn-primary:hover {
+             background-color: #b18f4a;
+        }
+
+        .btn-ai .ai-icon {
+            font-size: 1rem;
+        }
+
+        .banner-presets {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+        }
+
+        .btn-preset {
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preset:hover {
+            background-color: #e0dcd5;
+            border-color: #ccc;
+        }
+
+        .personality-section {
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .personality-section h3 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem;
+        }
+        .personality-section .section-description {
+            text-align: center;
+            margin: 0 auto 2rem;
+            max-width: 450px;
+        }
+
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .personality-card {
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .personality-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-color: var(--color-primary);
+        }
+
+        .personality-card.selected {
+            background: var(--color-primary);
+            border-color: var(--color-primary-dark);
+            color: white;
+            box-shadow: 0 5px 20px rgba(90, 125, 124, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .personality-card .trait-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .personality-card .trait-name {
+            font-weight: 600;
+            color: var(--color-text-dark);
+            transition: color 0.3s ease;
+        }
+
+        .personality-card.selected .trait-name {
+            color: white;
+        }
+        /* --- FIN: Custom Form Components --- */
+
+        /* --- DEBUT: Media Upload Section --- */
+        .media-upload-zone {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .upload-card {
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .upload-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-header h3 {
+            font-size: 1.5rem;
+            margin: 0 0 0.25rem;
+        }
+
+        .upload-header small {
+            color: var(--color-text);
+            font-size: 0.9rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--color-border);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--color-surface);
+        }
+
+        .upload-area:hover {
+            border-color: var(--color-primary);
+            background-color: #fdfcfb;
+        }
+
+        .upload-placeholder svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--color-primary);
+            stroke-width: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .upload-placeholder p {
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin: 0 0 0.5rem;
+        }
+
+        .upload-placeholder .file-info {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            opacity: 0.8;
+        }
+
+        .hidden-input {
+            display: none;
+        }
+
+        .media-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .media-preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            border: 1px solid var(--color-border);
+            background-color: var(--color-surface);
+        }
+
+        .media-preview-item img,
+        .media-preview-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .remove-media-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 1;
+            transition: all 0.2s ease;
+        }
+
+        .remove-media-btn:hover {
+            background: #e53935; /* Red */
+            transform: scale(1.1);
+        }
+
+        .customization-container {
+            display: grid;
+            grid-template-columns: 1fr 550px; /* Largeur de l'aperçu augmentée */
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        .preview-panel {
+            position: sticky;
+            top: 100px; /* Adjust based on nav height */
+            height: 70vh;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .preview-header h3 {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .preview-frame-container {
+            width: 100%;
+            height: 70vh; /* Utilisation de la hauteur de la fenêtre pour la cohérence */
+            min-height: 650px; /* Hauteur minimale */
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        #live-preview-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .custom-section {
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .custom-section-title {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .custom-section-desc {
+            margin: 0 0 1.5rem;
+            color: var(--color-text);
+        }
+
+        .theme-grid, .layout-options, .typography-options {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .theme-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+        .layout-options, .typography-options { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+        .theme-option input, .layout-option input, .typography-option input {
+            display: none;
+        }
+
+        .theme-card, .layout-card, .typography-card {
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .theme-card:hover, .layout-card:hover, .typography-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .theme-option input:checked + .theme-card,
+        .layout-option input:checked + .layout-card,
+        .typography-option input:checked + .typography-card {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, rgba(90, 125, 124, 0.03), rgba(90, 125, 124, 0.08));
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(90, 125, 124, 0.15);
+        }
+
+        .theme-preview-mini {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover .theme-preview-mini {
+            transform: scale(1.02);
+        }
+
+        .theme-label { 
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--color-text-dark);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .theme-desc {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            display: block;
+            font-style: italic;
+            opacity: 0.85;
+        }
+
+        .layout-visual {
+            padding: 0.5rem;
+            background: var(--color-secondary);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        .layout-demo {
+            height: 60px;
+            background: white;
+        }
+        .layout-info { text-align: left; }
+        .layout-name { font-weight: 600; display: block; }
+        .layout-desc { font-size: 0.85rem; opacity: 0.8; }
+
+        .typography-sample { font-size: 1.2rem; display: block; margin-bottom: 0.5rem; }
+        .typography-desc { font-size: 0.85rem; opacity: 0.8; }
+
+        /* Photo Enhancement Tool */
+        .enhance-thumbs-grid {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .enhance-preview-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            align-items: stretch;
+        }
+        .enhance-figure {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            background: var(--color-surface);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .enhance-figure figcaption {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .enhance-figure img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 6px;
+            background-color: #f0f0f0;
+        }
+        #afterFigure {
+            position: relative;
+        }
+        .enhance-placeholder {
+            position: absolute;
+            top: 40px; /* Adjust based on figcaption height */
+            left: 0.75rem;
+            right: 0.75rem;
+            bottom: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--color-border);
+            border-radius: 6px;
+            color: var(--color-text);
+            opacity: 0.7;
+            padding: 1rem;
+        }
+        .enhance-placeholder svg {
+            margin-bottom: 0.5rem;
+            stroke: var(--color-text);
+        }
+        .enhance-placeholder span {
+            font-size: 0.9rem;
+            max-width: 150px;
+        }
+        #enhanceAfterLarge[src=""], #enhanceAfterLarge:not([src]) {
+            display: none;
+        }
+        #enhanceAfterLarge:not([src=""]) + .enhance-placeholder {
+            display: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-weight: bold;
+            padding: 0.8rem 1.2rem; /* Ajustement taille */
+        }
+        .btn-hd:hover {
+            background: linear-gradient(145deg, #ffdf33, #f2c91a);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .btn-colorize-siri {
+            background: linear-gradient(90deg, #ff5f6d, #ffc371, #5fddff, #c371ff);
+            background-size: 400% 400%;
+            animation: siri-gradient 5s ease infinite;
+            color: white;
+            border: none;
+        }
+        @keyframes siri-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* --- FIN: Customization Section --- */
+
+        /* --- DEBUT: Form Navigation & Modals --- */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        footer { margin: 0; padding: 1.25rem 0; background: transparent; }
+        footer p { margin: .25rem 0; }
+
+        .nav-btn {
+            padding: 0.9rem 2rem;
+        }
+
+        #preview-button {
+            padding: 0.9rem 2.5rem;
+        }
+
+        .loading-container, .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(249, 247, 243, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            overscroll-behavior: contain;
+            touch-action: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--color-secondary);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-status {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            color: var(--color-text-dark);
+        }
+
+        /* Loading timeline progress */
+        .loading-timeline {
+            width: min(92vw, 560px);
+            margin: 1rem auto 0 auto;
+        }
+        .timeline-bar {
+            position: relative;
+            height: 10px;
+            background: var(--color-border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .timeline-bar .timeline-fill {
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 0%;
+            background: var(--color-primary);
+            transition: width .3s ease;
+        }
+        .timeline-meta {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: .25rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+        .loading-percent { font-size: .9rem; opacity: .9; }
+        .timeline-steps {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: .5rem;
+            margin-top: .75rem;
+            font-size: .75rem;
+            color: var(--color-text);
+        }
+        .timeline-step { text-align: center; opacity: .7; }
+        .timeline-step .step-dot {
+            width: 10px; height: 10px; margin: 0 auto .25rem auto;
+            border-radius: 50%; background: #cfd3d7; transition: all .25s ease;
+        }
+        .timeline-step.active { opacity: 1; }
+        .timeline-step.active .step-dot { background: var(--color-primary); transform: scale(1.1); }
+        .timeline-step.done { opacity: 1; }
+        .timeline-step.done .step-dot { background: var(--color-primary); }
+
+        /* Mobile-friendly labels for loading timeline */
+        @media (max-width: 480px) {
+            .loading-timeline { width: 94vw; }
+            .timeline-steps { gap: .25rem; }
+            .timeline-step .step-dot { width: 8px; height: 8px; }
+            .timeline-step .step-label { font-size: 0; }
+            .timeline-step .step-label::after { content: attr(data-short); font-size: .75rem; }
+        }
+        @media (max-width: 360px) {
+            .timeline-step .step-dot { width: 7px; height: 7px; }
+            .timeline-step .step-label::after { font-size: .68rem; }
+        }
+
+        .modal-card {
+            background: var(--color-surface-alt);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: sectionFadeIn 0.5s ease-out;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-card h2 {
+            font-size: 2rem;
+            margin: 0 0 1rem;
+        }
+
+        .modal-card p {
+            margin: 0 0 2rem;
+        }
+
+        #qrcode {
+            margin: 1.5rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            width: 150px;
+            height: 150px;
+        }
+        /* QR verrouillé (flouté) jusqu'au paiement */
+        #qrcode.locked canvas {
+            filter: blur(6px);
+            opacity: 0.7;
+        }
+        /* --- Nouvelle Modale de Succès --- */
+        .modal-card.success-flow {
+            max-width: 550px;
+            text-align: left;
+            padding: 2.5rem;
+        }
+        .success-step {
+            animation: sectionFadeIn 0.6s ease-out;
+        }
+        .success-step h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .success-step .modal-icon {
+            font-size: 2rem; margin-bottom: 0;
+        }
+        .payment-section {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+            border: 1px solid var(--color-border);
+        }
+        .payment-section #qrcode, .payment-section #qrcode-paid {
+            margin-bottom: 1rem;
+        }
+        .product-preview {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .product-preview img {
+            width: 120px;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+        /* Price badge over product image */
+        .product-image-wrap { position: relative; display: inline-block; }
+        .price-badge { position: absolute; right: -8px; top: -8px; background: linear-gradient(90deg, #5A7D7C, #86A2B1); color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: .35rem .6rem; font-weight: 800; font-size: .9rem; box-shadow: 0 6px 18px rgba(0,0,0,.18); pointer-events: none; }
+        @media (max-width: 480px) { .price-badge { font-size: .8rem; right: -6px; top: -6px; } }
+        .product-caption {
+            font-size: .95rem;
+            color: var(--color-text);
+        }
+        /* Confirmation step aesthetics */
+        .confirmation-header { text-align: center; margin-bottom: 1rem; }
+        .confirmation-header .title { font-size: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
+        .confirmation-header .subtitle { color: var(--color-text); margin-top: .5rem; }
+        .pill-badge { display:inline-block; padding: .25rem .6rem; border-radius: 999px; background: #e8f7ee; color:#0a8f4a; font-weight:600; font-size:.85rem; }
+        .confirmation-grid { display:grid; gap: 1rem; grid-template-columns: 1fr; }
+        .card { background: var(--color-surface); border:1px solid var(--color-border); border-radius: 10px; padding: 1rem; }
+        .card h3 { margin: 0 0 .5rem 0; font-size: 1.1rem; color: var(--color-text-dark); display:flex; align-items:center; gap:.5rem; }
+        .btn-row { display:flex; flex-direction: column; gap: .5rem; margin-top: .75rem; }
+        @media (min-width: 720px) { .confirmation-grid { grid-template-columns: 1fr 1fr; } .btn-row { flex-direction: row; } }
+        .note-card { background: #fff9e8; border: 1px solid #f4e0a6; border-radius: 8px; padding: 1rem; }
+        /* Modal overlay/mobile safety */
+        .modal-overlay {
+            padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+            overflow-y: auto;
+        }
+        .modal-card.success-flow {
+            width: min(92vw, 720px);
+            max-height: min(92dvh, 820px);
+            overflow: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,.15);
+        }
+        /* Responsive QR canvas sizing */
+        .payment-section #qrcode canvas,
+        .payment-section #qrcode-paid canvas {
+            width: clamp(120px, 40vw, 180px);
+            height: auto;
+            image-rendering: pixelated;
+        }
+        /* Buttons touch target */
+        .btn { min-height: 44px; }
+        .btn-row .btn { flex: 1; }
+        /* Mobile tweaks */
+        @media (max-width: 480px) {
+            .modal-card.success-flow { padding: 1.25rem; }
+            .confirmation-header .title { font-size: 1.6rem; }
+            .product-preview img { width: clamp(96px, 35vw, 140px); }
+            .shipping-info svg { width: 32px; height: 32px; }
+        }
+        /* Desktop enhancements */
+        @media (min-width: 1024px) {
+            .payment-section #qrcode canvas,
+            .payment-section #qrcode-paid canvas { width: 200px; }
+        }
+        .shipping-info {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+            font-size: 0.9rem;
+            color: var(--color-text);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .shipping-info svg {
+            width: 40px; min-width: 40px; height: 40px; stroke: var(--color-primary);
+        }
+        .payment-note {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-top: 0.75rem;
+        }
+
+        .souvenir-link-button, .close-modal-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        /* --- FIN: Form Navigation & Modals --- */
+
+        /* Animation shimmer pour l'invitation à recoloriser */
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        .after-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            text-align: center;
+            background: rgba(168,196,162,0.06);
+        }
+        .after-placeholder .pulse {
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.08);} }
+
+        .after-canvas {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            border-radius: 8px;
+            background: #f8f9fb;
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        :root {
+            --color-primary: #5A7D7C; /* Vert sauge */
+            --color-primary-dark: #4C6A69;
+            --color-secondary: #EAE7E2;
+            --color-text: #555555;
+            --color-text-dark: #333333; /* Gris anthracite */
+            --color-surface: #F9F7F3; /* Blanc cassé */
+            --color-surface-alt: #FFFFFF;
+            --color-border: #DCD9D4;
+            --color-accent: #c5a35b; /* Or vieilli */
+        }
+
+        body.create-page {
+            font-family: 'Lato', sans-serif;
+            background-color: transparent; /* reveal background videos */
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Background video layer (subtle, blurred, crossfading) --- */
+        #bgVideoLayer { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; height: calc(var(--vh, 1vh) * 100); }
+        #bgVideoLayer .bg-video { position: absolute; inset: 0; width: 100%; height: calc(var(--vh, 1vh) * 100); object-fit: cover; display: block; filter: blur(10px) saturate(115%) brightness(1.0); opacity: 0; transition: opacity 1200ms ease; }
+        #bgVideoLayer .bg-video.active { opacity: 0.45; }
+        #bgVideoLayer .bg-overlay { position: absolute; inset: 0; height: calc(var(--vh, 1vh) * 100); background: radial-gradient(1200px 800px at 50% 10%, rgba(255,255,255,.12), rgba(0,0,0,.08)); }
+        @supports (height: 100svh) {
+            html, body { min-height: 100svh; }
+            #bgVideoLayer { height: 100svh; }
+            #bgVideoLayer .bg-video, #bgVideoLayer .bg-overlay { height: 100svh; }
+        }
+        @media (prefers-reduced-motion: reduce) { #bgVideoLayer { display: none; } }
+
+        /* --- Hint: swipe right to preview (mobile) --- */
+        .mobile-scroll-hint {
+            display: none;
+            color: var(--color-text);
+            text-align: center;
+            font-size: 0.95rem;
+            margin: -0.5rem 0 1rem;
+            opacity: 0.9;
+        }
+        .mobile-scroll-hint .hint-icon {
+            display: inline-block;
+            margin-left: .25rem;
+            animation: hint-right 1.4s ease-in-out infinite;
+        }
+        @keyframes hint-right { 0% { transform: translateX(0); } 50% { transform: translateX(6px);} 100% { transform: translateX(0);} }
+
+        /* --- Mobile layout improvements for personalization & header --- */
+        @media (max-width: 768px) {
+            /* Bottom nav (non-sticky on mobile): visible only at the end of the page */
+            .form-navigation {
+                position: static;
+                bottom: auto;
+                left: auto; right: auto;
+                background: transparent;
+                padding: 1rem 1rem;
+                margin-top: 2rem;
+                border-top: 1px solid var(--color-border);
+                box-shadow: none;
+                z-index: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: .5rem;
+            }
+            .form-navigation .btn { width: 100%; white-space: normal; }
+            /* Order: CTA, subtext, then previous */
+            #next-btn { order: 1; }
+            #cta-subtext { order: 2; }
+            #prev-btn { order: 3; }
+            .create-nav { padding: .75rem 1rem; }
+            .create-nav { flex-direction: column; gap: .35rem; align-items: stretch; }
+            /* Hide verbose desktop steps, show compact mobile header */
+            .steps-indicator { display: none; }
+            .nav-title { display: block; text-align: center; font-weight: 800; color: var(--color-text-dark); font-size: 1rem; }
+            .mobile-steps { display: flex; justify-content: center; align-items: center; gap: .5rem; }
+            .mobile-steps .dots { display: flex; gap: .35rem; }
+            .mobile-steps .dot { width: 8px; height: 8px; border-radius: 50%; background: #cfd3d7; transition: transform .2s ease, background .2s ease; }
+            .mobile-steps .dot.active { background: var(--color-primary); transform: scale(1.1); }
+            .mobile-step-counter { font-size: .9rem; color: var(--color-text); }
+            .section-header h2 { font-size: 2rem; }
+        
+            /* Make customization horizontally scrollable with two full-width panes */
+            .customization-container {
+                grid-template-columns: 100% 100%;
+                gap: 1rem;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                padding-bottom: .5rem;
+            }
+            .customization-options, .preview-panel {
+                scroll-snap-align: start;
+                padding: 0 1rem;
+                box-sizing: border-box;
+                width: 100%;
+                min-width: 0; /* allow content to shrink and wrap inside grid item */
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Relax sticky preview on mobile and adjust sizing */
+            .preview-panel { position: static; top: auto; height: auto; }
+            .preview-frame-container { height: 65vh; min-height: 380px; }
+
+            /* Show swipe hint on mobile */
+            .mobile-scroll-hint { display: block; }
+
+            /* Prevent inner overflow inside the first pane */
+            .form-container { padding: 0; }
+            .custom-section { padding: 1rem; }
+            .ai-buttons-group { flex-wrap: wrap; }
+            .enhance-preview-area { grid-template-columns: 1fr; }
+            .theme-grid { grid-template-columns: 1fr; }
+            .layout-options { grid-template-columns: 1fr; }
+            .typography-options { grid-template-columns: 1fr; }
+
+            /* Amélioration Photos (IA) — éviter tout débordement horizontal */
+            .enhance-actions {
+                flex-direction: column;
+                align-items: stretch;
+                gap: .75rem;
+            }
+            .enhance-actions .btn {
+                width: 100%;
+                box-sizing: border-box;
+                white-space: normal; /* autoriser les retours à la ligne */
+            }
+            .ai-buttons-group .btn {
+                white-space: normal;
+                font-size: .9rem;
+            }
+            .enhance-figure { padding: .5rem; }
+            .enhance-figure img { height: auto; max-height: 260px; }
+            .enhance-thumbs-grid { gap: .5rem; }
+        }
+    </style>
+</head>
+<body class="create-page">
+    <!-- H1 SEO (masqué visuellement mais lu par Google) -->
+    <h1 style="position:absolute;left:-9999px;top:0;">Créer Mémorial Numérique QR Code pour Tombe</h1>
+
+    <!-- Subtle background videos (blurred and crossfading) -->
+    <div id="bgVideoLayer" aria-hidden="true">
+        <video class="bg-video" muted playsinline preload="metadata"></video>
+        <video class="bg-video" muted playsinline preload="metadata"></video>
+        <div class="bg-overlay"></div>
+    </div>
+
+    <nav class="create-nav">
+        <a href="#" class="back-link" data-fallback="index.html">← Retour</a>
+        <div class="nav-title">Personnalisation</div>
+        <div class="mobile-steps">
+            <div class="dots" aria-hidden="true">
+                <span class="dot" data-step="0"></span>
+                <span class="dot" data-step="1"></span>
+                <span class="dot" data-step="2"></span>
+            </div>
+            <div class="mobile-step-counter" aria-live="polite">Étape 1/3</div>
+        </div>
+        <div class="steps-indicator">
+            <span class="step active" data-step="1">1. Informations</span>
+            <span class="step" data-step="2">2. Médias</span>
+            <span class="step" data-step="3">3. Personnalisation</span>
+        </div>
+        <div class="tiny-progress" id="tiny-progress" aria-live="polite">1/3</div>
+    </nav>
+
+    <div class="form-container modern">
+        <main class="form-wrapper">
+            <form id="souvenir-form">
+                <!-- Section 1: Informations -->
+                <section class="form-section active" id="section-info">
+                    <div class="section-header">
+                        <span class="section-number">Étape 1</span>
+                        <h2>Commençons à construire votre mémorial ensemble</h2>
+                        <p class="section-description">Informations essentielles</p>
+                    </div>
+                    <div class="note-card" style="margin:.5rem 0 1rem 0;">
+                        🎁 Pack de <strong>2 QR codes</strong> inclus — <strong>garantie 5 ans par QR</strong> (jusqu’à <strong>10 ans</strong> de tranquillité). En cas de détérioration, <strong>remplacement gratuit</strong>.
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="name">Nom complet du défunt</label>
+                        <input type="text" id="name" name="name" required placeholder="Prénom Nom" class="form-control">
+                    </div>
+
+                    <div class="date-row">
+                        <div class="input-group">
+                            <label for="birthdate">Date de naissance</label>
+                            <input type="date" id="birthdate" name="birthdate" required class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <label for="birthplace">Lieu de naissance</label>
+                            <input type="text" id="birthplace" name="birthplace" placeholder="Ville, Pays" required class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <label for="deathdate">Date de décès</label>
+                            <input type="date" id="deathdate" name="deathdate" required class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="personality-section">
+                        <h3>Ses qualités & traits de caractère</h3>
+                        <p class="section-description">Sélectionnez jusqu'à 3 qualités qui le/la caractérisaient le mieux pour inspirer l'IA.</p>
+                        <div class="personality-grid" id="personality-grid">
+                            <div class="personality-card" data-trait="généreux"> <span class="trait-icon">💝</span> <span class="trait-name">Généreux</span> </div>
+                            <div class="personality-card" data-trait="courageux"> <span class="trait-icon">🦁</span> <span class="trait-name">Courageux</span> </div>
+                            <div class="personality-card" data-trait="bienveillant"> <span class="trait-icon">🤗</span> <span class="trait-name">Bienveillant</span> </div>
+                            <div class="personality-card" data-trait="passionné"> <span class="trait-icon">🔥</span> <span class="trait-name">Passionné</span> </div>
+                            <div class="personality-card" data-trait="sage"> <span class="trait-icon">🦉</span> <span class="trait-name">Sage</span> </div>
+                            <div class="personality-card" data-trait="drôle"> <span class="trait-icon">😄</span> <span class="trait-name">Drôle</span> </div>
+                            <div class="personality-card" data-trait="créatif"> <span class="trait-icon">🎨</span> <span class="trait-name">Créatif</span> </div>
+                            <div class="personality-card" data-trait="déterminé"> <span class="trait-icon">💪</span> <span class="trait-name">Déterminé</span> </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-with-action">
+                            <label for="message">Biographie et souvenirs</label>
+                            <div class="ai-buttons-group">
+                                <button type="button" id="improve-bio" class="btn btn-ai btn-secondary"><span class="ai-icon">✏️</span>Améliorer</button>
+                                <button type="button" id="correct-bio" class="btn btn-ai btn-secondary"><span class="ai-icon">✅</span>Corriger</button>
+                                <button type="button" id="generate-ai-text" class="btn btn-ai btn-primary"><span class="ai-icon">✨</span>Générer</button>
+                            </div>
+                        </div>
+                        <textarea id="message" name="message" placeholder="Décrivez la personne, ses passions, son parcours de vie... L'IA s'inspirera de ces mots." rows="8" class="form-control"></textarea>
+                        <div id="ai-status" class="ai-status"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-with-action">
+                            <label for="anecdote">Anecdote (optionnel)</label>
+                            <div class="ai-buttons-group">
+                                <button type="button" id="improve-anecdote" class="btn btn-ai btn-secondary"><span class="ai-icon">✏️</span>Améliorer</button>
+                                <button type="button" id="correct-anecdote" class="btn btn-ai btn-secondary"><span class="ai-icon">✅</span>Corriger</button>
+                                <button type="button" id="generate-anecdote" class="btn btn-ai btn-primary"><span class="ai-icon">✨</span>Inventer</button>
+                            </div>
+                        </div>
+                        <textarea id="anecdote" name="anecdote" placeholder="Racontez une anecdote marquante, ou laissez l'IA en suggérer une..." rows="4" class="form-control"></textarea>
+                        <div id="anecdote-ai-status" class="ai-status"></div>
+                    </div>
+
+                    <!-- Confidentialité du mémorial -->
+                    <div class="custom-section" style="margin-top: 2rem;">
+                        <h3 class="custom-section-title"><span class="section-icon">🔒</span>Confidentialité</h3>
+                        <p class="custom-section-desc">Choisissez si votre mémorial est visible par tous ou protégé par mot de passe.</p>
+                        <div class="input-group" style="margin-bottom:1rem;">
+                            <label>Visibilité du mémorial</label>
+                            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                                <label style="display:flex; align-items:center; gap:.5rem;">
+                                    <input type="radio" name="privacy" value="public" checked>
+                                    <span>Public (visible par tous)</span>
+                                </label>
+                                <label style="display:flex; align-items:center; gap:.5rem;">
+                                    <input type="radio" name="privacy" value="private">
+                                    <span>Privé (protégé par mot de passe)</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="input-group" id="privacy-password-group" style="display:none;">
+                            <label for="privacy-password">Mot de passe</label>
+                            <input type="password" id="privacy-password" class="form-control" placeholder="Entrez un mot de passe (requis pour le mode privé)">
+                        </div>
+                        <div class="input-group" id="privacy-password-confirm-group" style="display:none;">
+                            <label for="privacy-password-confirm">Confirmez le mot de passe</label>
+                            <input type="password" id="privacy-password-confirm" class="form-control" placeholder="Retapez le mot de passe pour confirmer">
+                            <small style="display:block; margin-top:.5rem; color:var(--color-text);"><strong>Important :</strong> notez ce mot de passe dans un endroit sûr. Il sera <strong>requis</strong> pour consulter le mémorial en mode privé et ne peut pas être récupéré si perdu.</small>
+                        </div>
+                        <div class="input-group" id="admin-password-group">
+                            <label for="admin-password">Mot de passe Administrateur</label>
+                            <input type="password" id="admin-password" class="form-control" placeholder="Mot de passe pour modifier le mémorial (obligatoire)" required>
+                        </div>
+                        <div class="input-group" id="admin-password-confirm-group">
+                            <label for="admin-password-confirm">Confirmez le mot de passe Administrateur</label>
+                            <input type="password" id="admin-password-confirm" class="form-control" placeholder="Retapez le mot de passe administrateur pour confirmer" required>
+                            <small style="display:block; margin-top:.5rem; color:var(--color-text);"><strong>Note :</strong> ce mot de passe administrateur permet d'éditer le mémorial (texte et photos) après la commande, qu'il soit public ou privé. Il <strong>ne peut pas être récupéré</strong> en cas de perte.</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Médias -->
+                <section class="form-section" id="section-media">
+                    <div class="section-header">
+                        <span class="section-number">Étape 2</span>
+                        <h2>Photos et Vidéos</h2>
+                    </div>
+
+                    <div class="media-upload-zone">
+                        <div class="upload-card">
+                            <div class="upload-header">
+                                <h3>Photos du souvenir</h3>
+                                <small>La première image sera utilisée comme photo de couverture.</small>
+                            </div>
+                            <label for="photos" class="upload-area">
+                                <div class="upload-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                    <p>Cliquez ou glissez vos photos ici</p>
+                                    <span class="file-info">JPG, PNG, GIF • Max 10MB par fichier</span>
+                                </div>
+                                <input type="file" id="photos" name="photos" multiple accept="image/*" class="hidden-input">
+                            </label>
+                            <div id="image-preview-container" class="media-preview-grid"></div>
+                        </div>
+
+                        <div class="upload-card">
+                            <div class="upload-header">
+                                <h3>Vidéos (optionnel)</h3>
+                                <small>Ajoutez des moments précieux en mouvement.</small>
+                            </div>
+                            <label for="videos" class="upload-area">
+                                <div class="upload-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 12l-3.5-3.5M12 16l3.5-3.5M4 20h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <p>Cliquez ou glissez vos vidéos ici</p>
+                                    <span class="file-info">MP4, MOV, AVI • Max 50MB par fichier</span>
+                                </div>
+                                <input type="file" id="videos" name="videos" multiple accept="video/*" class="hidden-input">
+                            </label>
+                            <div id="video-preview-container" class="media-preview-grid"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Personnalisation -->
+                <section class="form-section" id="section-custom">
+                    <div class="section-header">
+                        <span class="section-number">Étape 3</span>
+                        <h2>Personnalisation</h2>
+                    </div>
+                    <div class="mobile-scroll-hint" aria-live="polite" role="button" tabindex="0">
+                        <span class="hint-text">Cliquez ici pour voir l’aperçu</span>
+                    </div>
+
+                    <div class="customization-container">
+                        <!-- Options de personnalisation -->
+                        <div class="customization-options">
+                            <div class="custom-section">
+                                <h3 class="custom-section-title"><span class="section-icon">🎨</span>Thème visuel</h3>
+                                <p class="custom-section-desc">Choisissez l'ambiance générale du mémorial.</p>
+                                <div class="theme-grid">
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="elegant" checked>
+                                        <div class="theme-card">
+                                            <div class="theme-preview-mini" style="background: linear-gradient(135deg, #F9F7F3 0%, #E8E5DF 50%, #5A7D7C 100%); box-shadow: 0 4px 12px rgba(90, 125, 124, 0.15); position: relative; overflow: hidden;">
+                                                <div style="position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; background: #5A7D7C; border-radius: 50%; opacity: 0.8;"></div>
+                                                <div style="position: absolute; bottom: 8px; right: 8px; width: 30px; height: 2px; background: rgba(255,255,255,0.6);"></div>
+                                            </div>
+                                            <span class="theme-label">🌿 Serein</span>
+                                            <span class="theme-desc">Apaisant et naturel</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="dark">
+                                        <div class="theme-card">
+                                            <div class="theme-preview-mini" style="background: linear-gradient(135deg, #1c2128 0%, #2d333b 50%, #444c56 100%); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;">
+                                                <div style="position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; background: #86A2B1; border-radius: 50%; opacity: 0.9;"></div>
+                                                <div style="position: absolute; bottom: 8px; right: 8px; width: 30px; height: 2px; background: rgba(134,162,177,0.6);"></div>
+                                            </div>
+                                            <span class="theme-label">🌙 Sombre</span>
+                                            <span class="theme-desc">Élégant et intime</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="gold">
+                                        <div class="theme-card">
+                                            <div class="theme-preview-mini" style="background: linear-gradient(135deg, #fdfaf6 0%, #f5f0e8 50%, #c5a35b 100%); box-shadow: 0 4px 12px rgba(197, 163, 91, 0.2); border: 1px solid rgba(197, 163, 91, 0.3); position: relative; overflow: hidden;">
+                                                <div style="position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; background: #c5a35b; border-radius: 50%; opacity: 0.8;"></div>
+                                                <div style="position: absolute; bottom: 8px; right: 8px; width: 30px; height: 2px; background: rgba(197,163,91,0.6);"></div>
+                                            </div>
+                                            <span class="theme-label">✨ Or</span>
+                                            <span class="theme-desc">Raffiné et chaleureux</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="ocean">
+                                        <div class="theme-card">
+                                            <div class="theme-preview-mini" style="background: linear-gradient(135deg, #e8f4f8 0%, #b8dce8 50%, #4a90a4 100%); box-shadow: 0 4px 12px rgba(74, 144, 164, 0.2); position: relative; overflow: hidden;">
+                                                <div style="position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; background: #4a90a4; border-radius: 50%; opacity: 0.8;"></div>
+                                                <div style="position: absolute; bottom: 8px; right: 8px; width: 30px; height: 2px; background: rgba(255,255,255,0.6);"></div>
+                                            </div>
+                                            <span class="theme-label">🌊 Océan</span>
+                                            <span class="theme-desc">Calme et profond</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="rose">
+                                        <div class="theme-card">
+                                            <div class="theme-preview-mini" style="background: linear-gradient(135deg, #fdf5f7 0%, #f9e5eb 50%, #d4899f 100%); box-shadow: 0 4px 12px rgba(212, 137, 159, 0.2); position: relative; overflow: hidden;">
+                                                <div style="position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; background: #d4899f; border-radius: 50%; opacity: 0.8;"></div>
+                                                <div style="position: absolute; bottom: 8px; right: 8px; width: 30px; height: 2px; background: rgba(255,255,255,0.6);"></div>
+                                            </div>
+                                            <span class="theme-label">🌸 Rose</span>
+                                            <span class="theme-desc">Doux et tendre</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="lavender">
+                                        <div class="theme-card">
+                                            <div class="theme-preview-mini" style="background: linear-gradient(135deg, #f7f5fb 0%, #e8dff5 50%, #9b7fb8 100%); box-shadow: 0 4px 12px rgba(155, 127, 184, 0.2); position: relative; overflow: hidden;">
+                                                <div style="position: absolute; top: 8px; left: 8px; width: 20px; height: 20px; background: #9b7fb8; border-radius: 50%; opacity: 0.8;"></div>
+                                                <div style="position: absolute; bottom: 8px; right: 8px; width: 30px; height: 2px; background: rgba(255,255,255,0.6);"></div>
+                                            </div>
+                                            <span class="theme-label">💜 Lavande</span>
+                                            <span class="theme-desc">Délicat et apaisant</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="custom-section">
+                                <h3 class="custom-section-title"><span class="section-icon">✍️</span>Typographie</h3>
+                                <p class="custom-section-desc">L'élégance des mots.</p>
+                                <div class="typography-options">
+                                    <label class="typography-option">
+                                        <input type="radio" name="typography" value="serif" checked>
+                                        <div class="typography-card">
+                                            <span class="typography-sample" style="font-family: 'Lora', serif;">Élégance Classique</span>
+                                            <span class="typography-desc">Raffiné et intemporel</span>
+                                        </div>
+                                    </label>
+                                    <label class="typography-option">
+                                        <input type="radio" name="typography" value="sans">
+                                        <div class="typography-card">
+                                            <span class="typography-sample" style="font-family: 'Lato', sans-serif;">Modernité Épurée</span>
+                                            <span class="typography-desc">Simple et contemporain</span>
+                                        </div>
+                                    </label>
+                                    <label class="typography-option">
+                                        <input type="radio" name="typography" value="playfair">
+                                        <div class="typography-card">
+                                            <span class="typography-sample" style="font-family: 'Playfair Display', serif;">Distinction Royale</span>
+                                            <span class="typography-desc">Majestueux et élégant</span>
+                                        </div>
+                                    </label>
+                                    <label class="typography-option">
+                                        <input type="radio" name="typography" value="inter">
+                                        <div class="typography-card">
+                                            <span class="typography-sample" style="font-family: 'Inter', sans-serif;">Clarté Moderne</span>
+                                            <span class="typography-desc">Net et lisible</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="custom-section">
+                                <h3 class="custom-section-title"><span class="section-icon">✨</span>Amélioration Photos (IA)</h3>
+                                <p class="custom-section-desc">Améliorez la qualité ou recolorisez les photos en noir et blanc.</p>
+                                <div id="image-enhance-controls">
+                                    <div id="enhanceThumbs" class="enhance-thumbs-grid"></div>
+                                    <div class="enhance-preview-area">
+                                        <figure id="beforeFigure" class="enhance-figure">
+                                            <figcaption>Avant</figcaption>
+                                            <img id="enhanceBeforeLarge" src="" alt="Photo originale">
+                                        </figure>
+                                        <figure id="afterFigure" class="enhance-figure">
+                                            <figcaption>Après</figcaption>
+                                                                                        <div id="afterPlaceholder" class="enhance-placeholder">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.32 0L12 2.69z"></path><path d="M12 2v2.5"></path><path d="m9.41 11.59 2.59 2.59 2.59-2.59"></path><path d="M12 14.18V7.5"></path></svg>
+                                            </div>
+                                            <img id="enhanceAfterLarge" src="" alt="Photo améliorée">
+                                        </figure>
+                                    </div>
+                                    <div class="enhance-actions">
+                                        <button type="button" id="unifiedEnhanceBtn" class="btn btn-ghost btn-anim-color">Recoloriser</button>
+                                        <a id="downloadEnhancedBtn" class="btn btn-ghost btn-download" href="#" download="photo-amelioree.png" style="pointer-events:none; opacity:.5;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+                                            <span>Télécharger</span>
+                                        </a>
+                                    </div>
+                                    <div id="imageEnhanceStatus" class="ai-status"></div>
+                                </div>
+                                <select id="imageEnhanceSelect" style="display:none;"></select>
+                            </div>
+
+                            <div class="custom-section">
+                                <h3 class="custom-section-title"><span class="section-icon">💬</span>Citation mémorable</h3>
+                                <p class="custom-section-desc">Une phrase qui capture l'essence de la personne.</p>
+                                <div class="input-group" style="margin-bottom:0;">
+                                    <input type="text" id="quote" name="quote" placeholder="Une phrase qui résonne..." class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Aperçu en temps réel sur le côté -->
+                        <div class="preview-panel">
+                            <div class="preview-header">
+                                <h3>Aperçu</h3>
+                            </div>
+                            <div class="preview-frame-container">
+                                <iframe id="live-preview-frame" src="preview-new.html"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navigation -->
+                <div class="form-navigation">
+                    <button type="button" id="prev-btn" class="btn btn-secondary nav-btn" style="display:none;">← Précédent</button>
+                    <button type="button" id="next-btn" class="btn btn-primary nav-btn">Suivant →</button>
+                    <div id="cta-subtext" class="cta-subtext"></div>
+                </div>
+            </form>
+        </main>
+
+        <div id="loading" class="loading-container" style="display: none;">
+            <div style="text-align: center;">
+                <div class="spinner"></div>
+                <div id="loading-status" class="loading-status">Préparation…</div>
+                <div id="loading-timeline" class="loading-timeline">
+                    <div class="timeline-bar">
+                        <div id="loading-progress" class="timeline-fill"></div>
+                    </div>
+                    <div class="timeline-meta">
+                        <div id="loading-percent" class="loading-percent">0%</div>
+                    </div>
+                    <div class="timeline-steps">
+                        <div class="timeline-step" data-step="0"><div class="step-dot"></div><div class="step-label" data-short="Prépa.">Préparation</div></div>
+                        <div class="timeline-step" data-step="1"><div class="step-dot"></div><div class="step-label" data-short="Médias">Photos/Vidéos</div></div>
+                        <div class="timeline-step" data-step="2"><div class="step-dot"></div><div class="step-label" data-short="QR">QR temp.</div></div>
+                        <div class="timeline-step" data-step="3"><div class="step-dot"></div><div class="step-label" data-short="Save">Sauvegarde</div></div>
+                        <div class="timeline-step" data-step="4"><div class="step-dot"></div><div class="step-label" data-short="Final.">Finalisation</div></div>
+                        <div class="timeline-step" data-step="5"><div class="step-dot"></div><div class="step-label" data-short="HD">HD</div></div>
+                        <div class="timeline-step" data-step="6"><div class="step-dot"></div><div class="step-label" data-short="MAJ">Mise à jour</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="success-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-card success-flow">
+
+                <!-- Étape 1: PAIEMENT (montrée par défaut) -->
+                <div class="success-step" id="payment-step">
+                    <h2><span class="modal-icon">💳</span>Finalisez votre commande</h2>
+                    <p>Votre mémorial numérique est prêt. Pour recevoir votre QR code physique à coller, veuillez finaliser le paiement.</p>
+
+                    <div class="payment-section">
+                        <div id="qrcode" class="locked">
+                            <!-- Le QR est généré ici après paiement -->
+                        </div>
+                        <div class="payment-note">Le QR code sera disponible ici après le paiement.</div>
+                        <button type="button" id="pay-now-button" class="btn btn-primary souvenir-link-button">Payer maintenant (59,99 €)</button>
+                        <button type="button" id="simulate-pay-button" class="btn btn-secondary souvenir-link-button" style="margin-top:.5rem; display:none;">Tester sans payer (DEV)</button>
+                    </div>
+
+                    <div class="shipping-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M8.5 18H6.4a2.4 2.4 0 01-2.4-2.4V7.4a2.4 2.4 0 012.4-2.4h11.2a2.4 2.4 0 012.4 2.4v4.2M8.5 18v-4.5h4.5M8.5 18l-2.5-2.5M18 21a3 3 0 100-6 3 3 0 000 6z" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 18.5h.5M18 16v2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div>
+                            <strong>Livraison sous 3-6 jours ouvrés</strong><br>
+                            Votre pack comprend <strong>2 QR codes</strong> imprimés sur un support durable et résistant aux intempéries, puis expédiés à l'adresse que vous renseignerez lors du paiement. <strong>Garantie 5 ans par QR</strong> (soit jusqu’à <strong>10 ans</strong>). Remplacement <strong>gratuit</strong> si détérioration.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 2: CONFIRMATION (cachée par défaut) -->
+                <div class="success-step" id="confirmation-step" style="display:none;">
+                    <div class="confirmation-header">
+                        <div class="title"><span class="pill-badge">Paiement confirmé</span> 🎉 Paiement réussi !</div>
+                        <div class="subtitle">Votre commande est confirmée. Votre mémorial est accessible et votre QR code physique est en cours de préparation.</div>
+                    </div>
+
+                    <div class="payment-section">
+                        <div class="confirmation-grid">
+                            <div class="card">
+                                <h3>QR numérique</h3>
+                                <div id="qrcode-paid"></div>
+                                <div class="btn-row">
+                                    <a id="souvenir-link" href="#" target="_blank" class="btn btn-primary">Voir le mémorial</a>
+                                    <a id="download-qr" href="#" download="QR-Souvenir.png" class="btn btn-secondary">Télécharger (HD)</a>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <h3>QR physique</h3>
+                                <div class="product-preview" style="margin-top:.25rem; border:none; background:transparent; padding:0;">
+                                    <div class="product-image-wrap">
+                                        <img src="QR PUB.png" alt="Exemple de QR code physique">
+                                        <span class="price-badge" aria-label="Prix du produit">59,99 €</span>
+                                    </div>
+                                    <div class="product-caption">
+                                        Support résistant aux intempéries. <strong>2 QR codes</strong> inclus dans le pack pour remplacement facile si besoin.
+                                    </div>
+                                </div>
+                                <div class="note-card" style="margin-top:.75rem;">
+                                    <strong>Expédition</strong> — livraison sous <strong>3 à 6 jours ouvrés</strong> après confirmation.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shipping-info note-card">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M8.5 18H6.4a2.4 2.4 0 01-2.4-2.4V7.4a2.4 2.4 0 012.4-2.4h11.2a2.4 2.4 0 012.4 2.4v4.2M8.5 18v-4.5h4.5M8.5 18l-2.5-2.5M18 21a3 3 0 100-6 3 3 0 000 6z" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 18.5h.5M18 16v2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div>
+                            <strong>Livraison & garantie</strong><br>
+                            Le pack comprend <strong>2 QR codes</strong> — <strong>5 ans de garantie par QR</strong> (jusqu'à <strong>10 ans</strong>). Si l'un se détériore, nous envoyons un <strong>remplacement gratuit</strong>. Besoin d'aide ? Écrivez-nous à <a href="mailto:contact.souvenirqr@gmail.com">contact.souvenirqr@gmail.com</a>.
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="close-modal-button" class="btn btn-secondary close-modal-button" style="width:100%; margin-top: 1.5rem;">Terminer</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>
+            <a href="privacy.html">Confidentialité</a> ·
+            <a href="terms.html">Conditions</a> ·
+            <a href="legal.html">Mentions légales</a> ·
+            <a href="zones-desservies.html">Zones desservies</a> ·
+            <a href="cookies.html">Cookies</a>
+        </p>
+        <p>&copy; 2025 Souvenir QR. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Background videos controller -->
+    <script>
+      (function initBgVideo(){
+        try {
+          if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          const layer = document.getElementById('bgVideoLayer');
+          if (!layer) return;
+          const vids = layer.querySelectorAll('.bg-video');
+          if (vids.length < 2) return;
+          const sources = ['Danse place video.mp4','montagne.mp4','peche.mp4','Marche a la ferme.mp4'].map(s => encodeURI(s));
+          let i = 0;
+          let current = vids[0];
+          let next = vids[1];
+
+          function setSource(video, src) {
+            if (!video) return;
+            if (video.src && video.src.endsWith(src)) return; // minor optimization
+            video.src = src;
+            try { video.load(); } catch(_) {}
+          }
+
+          function playNext() {
+            const src = sources[i % sources.length];
+            setSource(next, src);
+            const start = () => {
+              next.currentTime = 0;
+              const p = next.play(); if (p && typeof p.catch === 'function') p.catch(()=>{});
+              next.classList.add('active');
+              current.classList.remove('active');
+              // swap
+              const tmp = current; current = next; next = tmp;
+              i++;
+              current.onended = playNext;
+            };
+            if (next.readyState >= 2) start(); else next.oncanplay = start;
+          }
+
+          // start first
+          setSource(current, sources[i % sources.length]);
+          const begin = () => {
+            current.currentTime = 0;
+            const p = current.play(); if (p && typeof p.catch === 'function') p.catch(()=>{});
+            current.classList.add('active');
+            i++;
+            current.onended = playNext;
+          };
+          if (current.readyState >= 2) begin(); else current.oncanplay = begin;
+        } catch (_) {}
+      })();
+    </script>
+    <script>
+      // Swipe/click handler for the hint to improve UX
+      (function bindSwipeHint(){
+        try {
+          const hint = document.querySelector('.mobile-scroll-hint');
+          if (!hint) return;
+          const optionsEl = document.querySelector('.customization-options');
+          const previewEl = document.querySelector('.preview-frame-container');
+          let isOnPreview = false; // start on edition/options by default
+          let suppressUntil = Date.now() + 1200; // avoid premature auto-toggle at load
+
+          const hintText = hint.querySelector('.hint-text');
+
+          function updateHintUI() {
+            if (!hintText) return;
+            if (isOnPreview) {
+              // On preview: instruct to click to return to editing
+              hintText.textContent = "Cliquez ici pour revenir à l’édition";
+            } else {
+              // On edition: instruct to click to view preview
+              hintText.textContent = "Cliquez ici pour voir l’aperçu";
+            }
+          }
+
+          function scrollToEl(el){
+            if (!el) return;
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+
+          function suppress(ms){ try { suppressUntil = Date.now() + (ms || 600); } catch(_) {} }
+          function goPreview(){ suppress(600); isOnPreview = true; updateHintUI(); scrollToEl(previewEl); }
+          function goOptions(){ suppress(600); isOnPreview = false; updateHintUI(); scrollToEl(optionsEl); }
+
+          // Expose helpers for external callers (create.js)
+          window.__scrollToPreview = goPreview;
+          window.__scrollToOptions = goOptions;
+          window.__setHintPreviewState = (b) => { isOnPreview = !!b; updateHintUI(); };
+          window.__suppressHint = suppress;
+
+          // Click toggles between options and preview
+          hint.addEventListener('click', () => { isOnPreview ? goOptions() : goPreview(); });
+
+          // Keyboard support
+          hint.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { goOptions(); }
+            if (e.key === 'ArrowLeft') { goPreview(); }
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hint.click(); }
+          });
+
+          // Touch swipe detection
+          let startX = 0, startY = 0, startT = 0;
+          hint.addEventListener('touchstart', (e) => {
+            const t = e.touches[0]; startX = t.clientX; startY = t.clientY; startT = Date.now();
+          }, { passive: true });
+          hint.addEventListener('touchend', (e) => {
+            const dt = Date.now() - startT;
+            const t = e.changedTouches[0];
+            const dx = t.clientX - startX; const dy = t.clientY - startY;
+            if (dt < 800 && Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
+              if (dx > 0) { goOptions(); } // swipe right → revenir à l'édition
+              else { goPreview(); } // swipe left → aller à l'aperçu
+            }
+          }, { passive: true });
+
+          // Auto-detection disabled: hint text changes only on explicit actions
+
+          // Also react to direct interactions on the preview panel
+          if (previewEl) {
+            previewEl.addEventListener('click', () => { isOnPreview = true; updateHintUI(); });
+            let px=0, py=0, pt=0;
+            previewEl.addEventListener('touchstart', (e) => {
+              const t = e.touches[0]; px = t.clientX; py = t.clientY; pt = Date.now();
+            }, { passive: true });
+            previewEl.addEventListener('touchend', (e) => {
+              const dt = Date.now() - pt;
+              const t = e.changedTouches[0];
+              const dx = t.clientX - px; const dy = t.clientY - py;
+              if (dt < 800 && Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0) { goOptions(); } else { isOnPreview = true; updateHintUI(); }
+              }
+            }, { passive: true });
+          }
+
+          // Init state on load
+          isOnPreview = false; updateHintUI();
+        } catch(_) {}
+      })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <div id="preview-modal-overlay" class="modal-overlay" style="display: none;">
+        <div id="preview-modal-content"></div>
+    </div>
+
+    <!-- Image Viewer Overlay -->
+    <div id="img-viewer-overlay" class="modal-overlay" style="display: none; align-items:center; justify-content:center;">
+        <div style="position: relative; max-width: 90vw; max-height: 85vh;">
+            <img id="img-viewer-img" src="" alt="Aperçu" style="max-width: 90vw; max-height: 85vh; border-radius: 10px; display:block;">
+            <button type="button" id="img-viewer-close" class="close-preview-btn" style="top: -14px; right: -14px;">×</button>
+        </div>
+    </div>
+
+    <!-- Mobile viewport and modal scroll-lock helpers -->
+    <script>
+      (function viewportAndModalHelpers(){
+        try {
+          // Sync CSS --vh to real viewport height to avoid iOS 100vh bugs
+          const setVh = () => {
+            const vh = (window.innerHeight || document.documentElement.clientHeight) * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+          };
+          setVh();
+          ['resize','orientationchange'].forEach(evt => window.addEventListener(evt, setVh, { passive: true }));
+          if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', setVh);
+          }
+
+          // Auto toggle body.modal-open depending on overlay visibility
+          const overlays = [
+            document.getElementById('preview-modal-overlay'),
+            document.getElementById('img-viewer-overlay'),
+            document.getElementById('loading')
+          ].filter(Boolean);
+
+          const updateModalOpen = () => {
+            const anyVisible = overlays.some(el => el && getComputedStyle(el).display !== 'none');
+            document.body.classList.toggle('modal-open', anyVisible);
+          };
+
+          overlays.forEach(el => {
+            const obs = new MutationObserver(updateModalOpen);
+            obs.observe(el, { attributes: true, attributeFilter: ['style','class'] });
+          });
+          updateModalOpen();
+        } catch(_) {}
+      })();
+    </script>
+
+    <script>
+        // Timeline management functions
+        let timelineCounter = 0;
+        
+        function addTimelineItem(year = '', event = '', isChecked = false) {
+            timelineCounter++;
+            const container = document.getElementById('timeline-container');
+            if (!container) {
+                // Safety guard: container not present in DOM
+                return;
+            }
+            const newItem = document.createElement('div');
+            newItem.className = `timeline-item ${isChecked ? 'validated' : ''}`;
+            newItem.innerHTML = `
+                <input type="checkbox" class="timeline-checkbox" ${isChecked ? 'checked' : ''} onchange="toggleTimelineValidation(this)">
+                <input type="text" class="timeline-year" placeholder="Année" name="timeline_year_${timelineCounter}" value="${year}">
+                <input type="text" class="timeline-event" placeholder="Événement" name="timeline_event_${timelineCounter}" value="${event}">
+            `;
+            container.appendChild(newItem);
+            
+            // Trigger preview update
+            if (window.updatePreviewFrame) {
+                window.updatePreviewFrame();
+            }
+        }
+        
+        function toggleTimelineValidation(checkbox) {
+            const item = checkbox.closest('.timeline-item');
+            if (checkbox.checked) {
+                item.classList.add('validated');
+            } else {
+                item.classList.remove('validated');
+            }
+            // Trigger preview update
+            if (window.updatePreviewFrame) {
+                window.updatePreviewFrame();
+            }
+        }
+        
+        // Auto-populate birth date when birthdate changes
+        function initBirthDateTimeline() {
+            const birthdateInput = document.querySelector('input[name="birthdate"]');
+            if (birthdateInput) {
+                birthdateInput.addEventListener('change', function() {
+                    const year = new Date(this.value).getFullYear();
+                    if (year && !document.querySelector('.timeline-item')) {
+                        addTimelineItem(year, 'Naissance', true);
+                    }
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initBirthDateTimeline);
+    </script>
+    <script src="js/cookie-consent.js" defer></script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="/js/internal-linking.js"></script>
+    <script>
+      // EmailJS configuration (browser-safe values only)
+      window.EMAILJS_CONFIG = {
+        publicKey: 'gkqdEvNVHMCDMRk_l',
+        serviceId: 'service_rfjkgu8',
+        templateId: 'template_6y92x5r',
+        toEmail: 'contact.souvenirqr@gmail.com'
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script type="module" src="js/create.js"></script>
+  </body>
+</html>

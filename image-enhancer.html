@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier Photo IA – Souvenir QR</title>
+  <meta name="description" content="Améliorez et recolorisez vos photos gratuitement avec l'IA (Nano Banana/Gemini). Réduction du flou, renforcement des détails, couleurs naturelles.">
+  <link rel="canonical" href="https://souvenir-qr.com/image-enhancer.html">
+  <meta name="keywords" content="améliorer photo ia, restaurer photo ancienne ia, recoloriser photo, enhancer photo ia, netteté photo, atelier photo ia, souvenir qr outil">
+  <meta name="robots" content="noindex,follow">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://souvenir-qr.com/image-enhancer.html">
+  <meta property="og:title" content="Atelier Photo IA – Améliorez vos images">
+  <meta property="og:description" content="Réduisez le flou, améliorez la netteté, recolorisez des photos anciennes avec l'IA.">
+  <meta property="og:image" content="https://souvenir-qr.com/mise%20en%20avant.png">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://souvenir-qr.com/image-enhancer.html">
+  <meta name="twitter:title" content="Atelier Photo IA – Améliorez vos images">
+  <meta name="twitter:description" content="Réduisez le flou, améliorez la netteté, recolorisez des photos anciennes avec l'IA.">
+  <meta name="twitter:image" content="https://souvenir-qr.com/mise%20en%20avant.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .enhancer-hero { padding: 4rem 1rem; background: linear-gradient(135deg, #f6f7fb, #fff); }
+    .enhancer-hero .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; align-items: center; }
+    .enhancer-title { font-size: 2.2rem; line-height: 1.2; margin-bottom: .75rem; }
+    .enhancer-sub { color: #555; }
+    .upload-panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; }
+    .dropzone { border: 2px dashed #c7c9d1; border-radius: 10px; padding: 1.25rem; text-align: center; color: #666; cursor: pointer; }
+    .dropzone.drag-over { outline: 2px dashed var(--color-primary, #6b7280); background: rgba(107,114,128,0.06); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    .compare figure { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: .75rem; display:flex; flex-direction:column; gap:.5rem; }
+    .compare img { width: 100%; max-height: 480px; object-fit: contain; border-radius: 8px; background: #f8f9fb; }
+    .controls { display:flex; gap: .5rem; flex-wrap: wrap; margin-top: .75rem; }
+    .download-btn { margin-left: auto; }
+    .status { font-size: .9rem; color: #666; min-height: 1.2rem; }
+    @media (max-width: 900px) { .enhancer-hero .container { grid-template-columns: 1fr; } .compare img{ max-height: 360px; } }
+  </style>
+</head>
+<body>
+  <nav class="main-nav">
+    <div class="logo"><span class="logo-icon">🛠️</span> Atelier Photo IA</div>
+    <div style="display:flex; gap:.5rem; align-items:center;">
+      <a href="index.html" class="nav-cta secondary">⟵ Accueil</a>
+      <a href="create.html" class="nav-cta">✨ Créer un mémorial</a>
+    </div>
+  </nav>
+
+  <header class="enhancer-hero">
+    <div class="container">
+      <div>
+        <h1 class="enhancer-title">Améliorez vos photos, redonnez vie aux couleurs</h1>
+        <p class="enhancer-sub">Réduisez le flou et le bruit, renforcez la netteté, ou recolorisez des photos anciennes. Basé sur l'IA "Nano Banana" (Gemini). Gratuit en essai.</p>
+        <!-- Hero action buttons removed per request -->
+      </div>
+      <div class="upload-panel">
+        <div class="dropzone" id="dropzone">
+          <p><strong>Glissez-déposez</strong> une image ici, ou cliquez pour choisir un fichier</p>
+          <small>Formats acceptés: JPG/PNG. Taille optimisée automatiquement.</small>
+          <input type="file" id="fileInput" accept="image/*" style="display:none;" />
+        </div>
+        <div class="controls">
+          <select id="modeSelect" class="modern-input" style="min-width:240px;">
+            <option value="enhance">Améliorer la qualité</option>
+            <option value="colorize">Recoloriser</option>
+          </select>
+          <button id="processBtn" class="ai-btn accent">Lancer l'amélioration</button>
+          <button id="downloadBtn" class="ai-btn secondary download-btn" disabled>Télécharger</button>
+        </div>
+        <div class="status" id="status"></div>
+        <div class="compare">
+          <figure>
+            <figcaption>Avant</figcaption>
+            <img id="beforeImg" alt="Avant" />
+          </figure>
+          <figure>
+            <figcaption>Après</figcaption>
+            <img id="afterImg" alt="Après" />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="atelier" style="max-width:1100px; margin:2rem auto; padding: 0 1rem;">
+    <section>
+      <h2>Fonctionnement</h2>
+      <ul>
+        <li><strong>Sélection</strong> Importez une photo depuis votre appareil.</li>
+        <li><strong>Choix du mode</strong> "Améliorer" (netteté/couleur) ou "Recoloriser".</li>
+        <li><strong>Traitement IA</strong> La photo est optimisée via notre moteur IA sécurisé.</li>
+        <li><strong>Téléchargement</strong> Récupérez le résultat en un clic.</li>
+      </ul>
+      <p style="opacity:.8;">Respect de la vie privée: les images sont traitées à la volée. Pour une intégration dans un mémorial, utilisez le bouton dédié.</p>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Souvenir QR</h3>
+        <p>Honorer la mémoire avec dignité et modernité</p>
+      </div>
+      <div class="footer-section">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="create.html">Créer un mémorial</a></li>
+          <li><a href="image-enhancer.html">Atelier Photo IA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Souvenir QR. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/image-enhancer.js"></script>
+  <script src="/js/internal-linking.js"></script>
+</body>
+</html>

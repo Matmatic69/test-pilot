@@ -1,0 +1,27 @@
+{
+  "name": "Souvenir QR",
+  "short_name": "Souvenir QR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F9F7F3",
+  "theme_color": "#5A7D7C",
+  "icons": [
+    {
+      "src": "/icone/souvenir-qr-favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icone/souvenir-qr-favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icone/souvenir-qr-favicon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

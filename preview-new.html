@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aperçu du Mémorial - Souvenir QR</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://souvenir-qr.com/preview-new.html">
+    <link rel="icon" href="/235.png" type="image/png">
+    <link rel="apple-touch-icon" href="/235.png">
+    <link rel="shortcut icon" href="/235.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;600&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #5A7D7C;
+            --color-primary-dark: #4C6A69;
+            --color-secondary: #EAE7E2;
+            --color-text: #555555;
+            --color-text-dark: #333333;
+            --color-surface: #F9F7F3;
+            --color-surface-alt: #FFFFFF;
+            --color-border: #DCD9D4;
+            --font-body: 'Lato', sans-serif;
+            --font-heading: 'Lora', serif;
+        }
+
+        body.memorial-page {
+            font-family: var(--font-body);
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            margin: 0;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- Mode toggle --- */
+        .mode-toggle {
+            position: fixed;
+            top: 16px; right: 16px;
+            z-index: 2000;
+            display: flex; gap: .5rem;
+            background: rgba(255,255,255,.95);
+            backdrop-filter: blur(12px);
+            padding: .5rem;
+            border-radius: 999px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .mode-toggle button {
+            appearance: none; border: 0; background: transparent; cursor: pointer;
+            padding: .5rem .9rem; border-radius: 999px; font-weight: 700; color: var(--color-text);
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        .mode-toggle button:hover {
+            background: rgba(90, 125, 124, 0.1);
+            color: var(--color-primary);
+        }
+        .mode-toggle button.active { 
+            background: var(--color-primary); 
+            color: #fff; 
+            box-shadow: 0 2px 8px rgba(90, 125, 124, 0.3);
+        }
+
+        /* --- Social profile mode --- */
+        .social-header { display: none; }
+        .social-header { position: relative; margin-bottom: 2rem; }
+        .social-cover { position: relative; height: 260px; background-size: cover; background-position: center; }
+        .social-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35)); }
+        .social-profile { position: relative; max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+        /* Avatar with gradient ring and fallback */
+        .avatar-wrap { position: absolute; left: 1rem; top: -96px; width: 164px; height: 164px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), #c5a35b); padding: 5px; box-shadow: 0 16px 36px rgba(0,0,0,.25); }
+        .avatar-inner { width: 100%; height: 100%; border-radius: 50%; background: #fff; overflow: hidden; display: grid; place-items: center; }
+        .avatar-inner .social-avatar { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .avatar-fallback { width: 100%; height: 100%; border-radius: 50%; display: none; place-items: center; font-family: var(--font-heading); font-weight: 700; font-size: 2.2rem; color: var(--color-text-dark); background: #f1f1f1; letter-spacing: .5px; }
+        .avatar-fallback.show { display: grid; }
+        .social-avatar { background: transparent; border: none; box-shadow: none; }
+        .social-info { padding: .75rem 0 0 200px; color: #fff; margin-top: -80px; }
+        .social-name { font-family: var(--font-heading); font-size: 1.8rem; margin: 0 0 .25rem 0; }
+        .social-dates { opacity: .9; font-weight: 700; }
+        .social-quote { margin-top: .35rem; font-style: italic; opacity: .95; }
+
+        /* Info card + chips */
+        .social-info-card { display: inline-block; background: rgba(255,255,255,.9); color: var(--color-text-dark); border: 1px solid var(--color-border); border-radius: 12px; padding: .75rem 1rem; box-shadow: 0 8px 24px rgba(0,0,0,.08); backdrop-filter: blur(4px); }
+        .social-info-card .social-name { color: var(--color-text-dark); font-size: 2rem; margin: 0; }
+        .social-info-card .social-dates { color: var(--color-text); margin-top: .15rem; }
+        .social-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+        .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .6rem; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface); color: var(--color-text-dark); font-weight: 700; font-size: .85rem; }
+        .social-actions { margin-top: .6rem; }
+        .share-btn { appearance: none; border: 1px solid var(--color-border); background: #fff; color: var(--color-text-dark); padding: .4rem .75rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .share-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+        body.mode-social .memorial-hero { display: none; }
+        body.mode-social #socialHeader { display: block; }
+        body.mode-social .memorial-container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 320px 1fr; gap: 1.25rem; }
+        body.mode-social .memorial-section { background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.25rem; box-shadow: 0 10px 24px rgba(0,0,0,.06); }
+        body.mode-social #personalitySection { grid-column: 1; }
+        body.mode-social #locationSection { grid-column: 1; }
+        body.mode-social #biographySection { grid-column: 1 / span 2; }
+        body.mode-social #gallerySection { grid-column: 2; }
+        body.mode-social #videoSection { grid-column: 2; }
+        body.mode-social #timelineSection { grid-column: 2; }
+
+        @media (max-width: 1023px) {
+            body.mode-social .memorial-container { display: block; padding: 0 1rem; }
+            .social-cover { height: 200px; }
+            .avatar-wrap { top: -76px; width: 136px; height: 136px; }
+            .social-info { padding-left: 170px; margin-top: -64px; }
+            .social-info-card .social-name { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .avatar-wrap { top: -64px; width: 116px; height: 116px; }
+            .social-info { padding-left: 150px; margin-top: -56px; }
+            .social-info-card { padding: .6rem .75rem; border-radius: 10px; }
+            .chip { font-size: .8rem; }
+        }
+
+        /* --- Theme: Serein (Default) --- */
+        body[data-theme='elegant'] { /* 'elegant' is now 'serene' */
+            --color-primary: #5A7D7C;
+            --color-primary-dark: #4C6A69;
+            --color-text: #555555;
+            --color-text-dark: #333333;
+            --color-surface: #F9F7F3;
+            --color-surface-alt: #FFFFFF;
+            --color-border: #DCD9D4;
+            --color-accent: #8FA9A8;
+        }
+
+        /* --- Theme: Sombre --- */
+        body[data-theme='dark'] {
+            --color-primary: #86A2B1;
+            --color-primary-dark: #6B8897;
+            --color-text: #c9d1d9;
+            --color-text-dark: #f0f6fc;
+            --color-surface: #1c2128;
+            --color-surface-alt: #2d333b;
+            --color-border: #444c56;
+            --color-accent: #9BB8C6;
+        }
+
+        /* --- Theme: Or --- */
+        body[data-theme='gold'] {
+            --color-primary: #c5a35b;
+            --color-primary-dark: #A68748;
+            --color-text: #6c584c;
+            --color-text-dark: #5a3a22;
+            --color-surface: #fdfaf6;
+            --color-surface-alt: #ffffff;
+            --color-border: #e9e2d9;
+            --color-accent: #D4B876;
+        }
+
+        /* --- Theme: Océan --- */
+        body[data-theme='ocean'] {
+            --color-primary: #4a90a4;
+            --color-primary-dark: #3a7585;
+            --color-text: #4a6572;
+            --color-text-dark: #2d4651;
+            --color-surface: #e8f4f8;
+            --color-surface-alt: #ffffff;
+            --color-border: #b8dce8;
+            --color-accent: #6ba8ba;
+        }
+
+        /* --- Theme: Rose --- */
+        body[data-theme='rose'] {
+            --color-primary: #d4899f;
+            --color-primary-dark: #b76f87;
+            --color-text: #6d5560;
+            --color-text-dark: #4a3a42;
+            --color-surface: #fdf5f7;
+            --color-surface-alt: #ffffff;
+            --color-border: #f9e5eb;
+            --color-accent: #e09daf;
+        }
+
+        /* --- Theme: Lavande --- */
+        body[data-theme='lavender'] {
+            --color-primary: #9b7fb8;
+            --color-primary-dark: #7d6497;
+            --color-text: #5d5268;
+            --color-text-dark: #3e364a;
+            --color-surface: #f7f5fb;
+            --color-surface-alt: #ffffff;
+            --color-border: #e8dff5;
+            --color-accent: #b393ca;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--color-text-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .memorial-container {
+            max-width: none;
+            margin: 0 auto;
+            padding: 0; /* Full-width sections */
+        }
+
+        /* --- Hero Section --- */
+        .memorial-hero {
+            position: relative;
+            text-align: center;
+            padding: 6rem 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--color-surface-alt) 0%, var(--color-surface) 100%);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            border: 1px solid var(--color-border);
+        }
+
+        .memorial-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+            will-change: transform;
+            transform: translateY(0);
+            transition: transform .2s ease-out;
+        }
+
+        .memorial-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .memorial-name {
+            font-size: 3.5rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .memorial-dates {
+            font-size: 1.1rem;
+            margin: 0.5rem 0 1.5rem;
+            opacity: 0.8;
+        }
+
+        .memorial-quote {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- Content Sections --- */
+        .memorial-section {
+            margin-bottom: 4rem;
+        }
+
+        .memorial-section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 2rem;
+        }
+
+        .memorial-biography {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-wrap; /* Respect line breaks */
+        }
+
+        /* --- Gallery --- */
+        .memorial-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* --- Videos --- */
+        .memorial-videos {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .memorial-video {
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        .memorial-video video {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .memorial-photo {
+            width: 100%;
+            aspect-ratio: auto;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+        }
+
+        .memorial-photo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            transition: none;
+        }
+
+        .memorial-photo:hover img {
+            transform: none;
+        }
+
+        /* --- Modal (Preview) overrides: full-width, single-column media --- */
+        body.modal-view .memorial-container {
+            max-width: none;
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        body.modal-view .memorial-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        body.modal-view .memorial-photo {
+            width: 100%;
+            aspect-ratio: auto;
+            margin-bottom: 1rem;
+            border-radius: 0;
+            border: none;
+            overflow: hidden;
+        }
+        body.modal-view .memorial-photo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        body.modal-view .memorial-videos {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        body.modal-view .memorial-video {
+            width: 100%;
+            width: 100%;
+            aspect-ratio: auto;
+            margin-bottom: 1rem;
+            border-radius: 0;
+            border: none;
+            background: #000;
+        }
+        body.modal-view .memorial-video video {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* --- Timeline --- */
+        .memorial-timeline {
+            border-left: 2px solid var(--color-border);
+            padding-left: 2rem;
+        }
+
+        .memorial-timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+
+        .memorial-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.25rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+            border: 3px solid var(--color-primary);
+        }
+
+        .memorial-timeline-date {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--color-text-dark);
+        }
+
+        .memorial-timeline-event {
+            font-size: 1rem;
+        }
+
+        /* Desktop-only: reduce displayed photo size on final page to preserve perceived quality */
+        @media (min-width: 1024px) {
+            /* Apply only to final page (not modal preview) */
+            body:not(.modal-view) .memorial-gallery { align-items: center; }
+            body:not(.modal-view) .memorial-photo { max-width: 900px; margin: 0 auto; }
+            body:not(.modal-view) .memorial-photo img { width: auto; max-width: 100%; }
+        }
+
+        /* --- Animated scrollytelling mode --- */
+        body.mode-animated .memorial-section,
+        body.mode-animated .memorial-photo,
+        body.mode-animated .memorial-video,
+        body.mode-animated .memorial-timeline-item { opacity: 0; transform: translateY(16px); transition: opacity .6s ease-out, transform .6s ease-out; }
+        body.mode-animated .in-view { opacity: 1; transform: translateY(0); }
+        body.mode-animated .memorial-photo img { transition: transform .8s ease-out, box-shadow .4s ease; }
+        body.mode-animated .memorial-photo.in-view img { transform: scale(1.01); }
+
+        /* Reduce motion accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .mode-toggle { backdrop-filter: none; }
+            body.mode-animated .memorial-section,
+            body.mode-animated .memorial-photo,
+            body.mode-animated .memorial-video,
+            body.mode-animated .memorial-timeline-item { transition: opacity .3s ease-out; transform: none; }
+            body.mode-animated .in-view { transform: none; }
+            .memorial-hero-bg { transition: none !important; transform: none !important; }
+        }
+
+        /* (Legacy social overrides removed; see primary social styles above) */
+
+        /* --- Privacy gate (public/private with password) --- */
+        .privacy-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 2500; 
+            background: radial-gradient(1200px 800px at 50% 20%, rgba(255,255,255,.08), rgba(0,0,0,.9)); 
+            backdrop-filter: blur(18px) saturate(120%); padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+        .privacy-card { width: min(520px, 92vw); background: linear-gradient(180deg, var(--color-surface-alt), #fff); color: var(--color-text); border: 1px solid var(--color-border); border-radius: 18px; padding: 1.25rem; box-shadow: 0 30px 70px rgba(0,0,0,.30); box-sizing: border-box; display: grid; gap: .9rem; }
+        .privacy-card h2 { margin: 0 0 .2rem 0; font-family: var(--font-heading); color: var(--color-text-dark); font-weight: 700; letter-spacing: .2px; }
+        .privacy-card p { margin: 0 0 1rem 0; opacity: .9; }
+        .privacy-title-row { display:flex; align-items: center; gap:.8rem; margin-bottom:.5rem; }
+        .privacy-lock { width: 42px; height: 42px; border-radius: 12px; display:grid; place-items:center; background: linear-gradient(135deg, var(--color-primary), #c5a35b); color:#fff; box-shadow: 0 8px 22px rgba(0,0,0,.15); }
+        .privacy-input { width: 100%; max-width: 100%; box-sizing: border-box; display: block; margin: 0; min-height: 52px; padding: 14px 44px 14px 16px; border-radius: 12px; border: 1px solid var(--color-border); outline: none; font-size: 1.05rem; background: #fff; transition: border-color .2s, box-shadow .2s; }
+        .privacy-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(90,125,124,.15); }
+        .privacy-input-wrap { position: relative; width: 100%; }
+        .privacy-toggle { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: transparent; border: 0; cursor: pointer; font-size: 1.1rem; color: var(--color-text); width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; }
+        .privacy-toggle:hover { background: rgba(0,0,0,.05); }
+        .privacy-actions { margin-top: 1rem; display: flex; gap: .6rem; align-items: center; }
+        .privacy-submit { appearance: none; border: 1px solid var(--color-primary); background: var(--color-primary); color: #fff; padding: .9rem 1rem; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; font-size: 1.05rem; letter-spacing: .2px; }
+        .privacy-submit:hover { background: var(--color-primary-dark); }
+        .privacy-error { margin-top: .6rem; color: #b00020; font-weight: 700; min-height: 1.2em; }
+        .privacy-hint { margin-top: .4rem; font-size: .92rem; opacity: .8; }
+        body.privacy-blur .memorial-container { filter: blur(16px) brightness(.4); opacity: 0.1; pointer-events: none; user-select: none; }
+        body.privacy-blur .social-header { filter: blur(12px) brightness(.6); opacity: 0.2; pointer-events: none; }
+        body.privacy-blur .mode-toggle { filter: blur(6px); opacity: 0.2; pointer-events: none; }
+        @media (prefers-reduced-motion: reduce) { body.privacy-blur .memorial-container { filter: none; } }
+
+        @media (max-width: 480px) {
+            .privacy-card { padding: 1rem; border-radius: 16px; width: 94vw; }
+            .privacy-card h2 { font-size: 1.2rem; }
+            .privacy-card p { font-size: .95rem; }
+            .privacy-input { font-size: 1rem; }
+            .privacy-submit { font-size: 1rem; }
+        }
+
+        /* Unlock toast */
+        .unlock-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: linear-gradient(135deg, #16a34a, #22c55e); color: #fff; padding: .75rem 1rem; border-radius: 12px; box-shadow: 0 12px 30px rgba(0,0,0,.25); display: none; align-items: center; gap: .6rem; z-index: 2600; font-weight: 800; letter-spacing: .2px; }
+        .unlock-icon { font-size: 1.1rem; }
+        .unlock-toast.show { display: inline-flex; animation: toastIn .6s ease-out forwards; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(.98); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
+        @media (prefers-reduced-motion: reduce) { .unlock-toast.show { animation: none; } }
+        /* Update toast */
+        .update-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); background: #111827; color: #fff; padding: .7rem .9rem; border-radius: 12px; box-shadow: 0 12px 30px rgba(0,0,0,.25); display: none; align-items: center; gap: .6rem; z-index: 2600; font-weight: 800; letter-spacing: .2px; }
+        .update-toast.show { display: inline-flex; animation: toastIn .6s ease-out forwards; }
+        .update-close { appearance:none; border:0; background: transparent; color:#fff; font-weight:900; cursor:pointer; padding:.25rem .4rem; border-radius:8px; }
+        .update-close:hover { background: rgba(255,255,255,.1); }
+        /* Admin upload minimal spinner */
+        .admin-spinner { width: 42px; height: 42px; border: 4px solid var(--color-secondary); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Drag-over highlight for reordering */
+        .drag-over { outline: 2px dashed var(--color-primary); outline-offset: -6px; }
+        /* Preview info banner */
+        .info-banner { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: rgba(0,0,0,.86); color:#fff; border: 1px solid rgba(255,255,255,.15); border-radius: 12px; padding: .65rem .85rem; display: none; z-index: 2600; box-shadow: 0 12px 30px rgba(0,0,0,.25); max-width: 92vw; }
+        .info-banner.show { display: inline-flex; gap: .6rem; align-items: center; }
+        .info-banner .close { appearance: none; border: 0; background: rgba(255,255,255,.12); color:#fff; font-weight: 800; padding: .25rem .5rem; border-radius: 8px; cursor: pointer; }
+        .info-banner .close:hover { background: rgba(255,255,255,.2); }
+        /* AdminBar mobile layout */
+        @media (max-width: 480px) {
+            #adminBar { left: 50%; right: auto; transform: translateX(-50%); bottom: 10px; width: 94vw; flex-wrap: wrap; justify-content: center; gap: .4rem; padding: .6rem; }
+            #adminBar button, #adminBar label { font-size: .95rem; }
+        }
+    </style>
+</head>
+<body class="memorial-page" data-theme="elegant">
+
+    <!-- Mode toggle (Animated / Classic) -->
+    <div class="mode-toggle" id="modeToggle" role="group" aria-label="Mode d'affichage">
+        <button id="btnAnimated" class="active" type="button" aria-pressed="true">Animé</button>
+        <button id="btnClassic" type="button" aria-pressed="false">Classique</button>
+        <button id="btnSocial" type="button" aria-pressed="false">Social</button>
+        <button id="btnAdmin" type="button" aria-pressed="false">Mode édition</button>
+    </div>
+    <!-- Admin toolbar (shown when unlocked) -->
+    <div id="adminBar" style="position: fixed; bottom: 16px; right: 16px; z-index: 2600; display:none; background: rgba(0,0,0,.8); color:#fff; padding:.6rem; border-radius:12px; gap:.5rem; align-items:center;">
+        <button id="adminToggleEdit" type="button" style="appearance:none; border:0; background:#86A2B1; color:#fff; padding:.45rem .7rem; border-radius:8px; font-weight:800;">Éditer le texte</button>
+        <button id="adminSave" type="button" style="appearance:none; border:0; background:#16a34a; color:#fff; padding:.45rem .7rem; border-radius:8px; font-weight:800;">Enregistrer</button>
+        <label style="background:#444; padding:.35rem .6rem; border-radius:8px; cursor:pointer;">
+            Ajouter photos<input id="adminAddPhotos" type="file" accept="image/*" multiple style="display:none;">
+        </label>
+        <label style="background:#444; padding:.35rem .6rem; border-radius:8px; cursor:pointer;">
+            Ajouter vidéos<input id="adminAddVideos" type="file" accept="video/*" multiple style="display:none;">
+        </label>
+        <button id="adminLogout" type="button" style="appearance:none; border:0; background:#b00020; color:#fff; padding:.45rem .7rem; border-radius:8px; font-weight:800;">Quitter l’édition</button>
+    </div>
+
+    <!-- Unlock toast -->
+    <div id="unlockToast" class="unlock-toast" role="status" aria-live="polite">
+        <span class="unlock-icon">🔓</span>
+        <span>Mémorial déverrouillé</span>
+    </div>
+    <!-- Update toast -->
+    <div id="updateToast" class="update-toast" role="status" aria-live="polite">
+        <span id="updateToastText">Mémorial mis à jour ✔</span>
+        <button id="updateToastClose" class="update-close" type="button" aria-label="Fermer">Fermer</button>
+    </div>
+    <!-- Preview information banner (only before payment: no id) -->
+    <div id="previewBanner" class="info-banner" role="status" aria-live="polite" hidden>
+        <span>🔔 Après paiement, vous aurez un accès complet pour modifier le texte, ajouter/supprimer et déplacer vos photos et vidéos.</span>
+        <button id="previewBannerClose" class="close" type="button" aria-label="Fermer">Fermer</button>
+    </div>
+
+    <!-- Social profile header (shown in mode-social) -->
+    <header class="social-header" id="socialHeader" aria-label="Profil du mémorial">
+        <div class="social-cover" id="socialCover"></div>
+        <div class="social-profile">
+            <div class="avatar-wrap">
+                <div class="avatar-inner">
+                    <img id="profileAvatar" class="social-avatar" alt="Photo de profil" src="" />
+                    <div id="avatarFallback" class="avatar-fallback" aria-hidden="true">SE</div>
+                </div>
+            </div>
+            <div class="social-info">
+                <div class="social-info-card">
+                    <h1 id="profileName" class="social-name">Prénom Nom</h1>
+                    <div id="profileDates" class="social-dates">Dates</div>
+                    <div id="socialMeta" class="social-meta">
+                        <span id="chipBirthplace" class="chip" style="display:none;">📍 Lieu</span>
+                        <span id="chipPhotos" class="chip" style="display:none;">📷 0 photo</span>
+                        <span id="chipVideos" class="chip" style="display:none;">🎞️ 0 vidéo</span>
+                    </div>
+                    <div class="social-actions">
+                        <button id="shareBtn" class="share-btn" type="button">Partager</button>
+                    </div>
+                </div>
+                <div id="profileQuote" class="social-quote">"Citation"</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Privacy overlay -->
+    <div id="privacyOverlay" class="privacy-overlay" aria-modal="true" role="dialog" aria-labelledby="privacyTitle" aria-describedby="privacyDesc" hidden>
+        <div class="privacy-card">
+            <div class="privacy-title-row">
+                <div class="privacy-lock" aria-hidden="true">🔒</div>
+                <div>
+                    <h2 id="privacyTitle">Mémorial privé</h2>
+                    <p id="privacyDesc">Ce mémorial est protégé. Veuillez saisir le mot de passe pour y accéder.</p>
+                </div>
+            </div>
+            <div class="privacy-input-wrap">
+                <input type="password" id="privacyPassword" class="privacy-input" placeholder="Mot de passe" autocomplete="current-password" inputmode="text" />
+                <button id="privacyTogglePwd" class="privacy-toggle" type="button" aria-label="Afficher le mot de passe">👁️</button>
+            </div>
+            <div id="privacyError" class="privacy-error" role="alert" aria-live="polite"></div>
+            <button id="privacySubmit" class="privacy-submit" type="button">Accéder</button>
+            <div class="privacy-hint">Astuce : appuyez sur Entrée pour valider.</div>
+        </div>
+    </div>
+    <!-- Admin upload overlay -->
+    <div id="adminUploadOverlay" class="privacy-overlay" aria-modal="true" role="dialog" hidden>
+        <div class="privacy-card" style="text-align:center;">
+            <div class="admin-spinner" aria-hidden="true"></div>
+            <div style="font-weight:800;">Téléchargement en cours…</div>
+            <div style="margin-top:.25rem; color:var(--color-text);">Vos médias sont en train d’être ajoutés au mémorial.</div>
+        </div>
+    </div>
+    <!-- Mode édition overlay (admin unlock) -->
+    <div id="adminOverlay" class="privacy-overlay" aria-modal="true" role="dialog" aria-labelledby="adminTitle" aria-describedby="adminDesc" hidden>
+        <div class="privacy-card">
+            <div class="privacy-title-row">
+                <div class="privacy-lock" aria-hidden="true">🛠️</div>
+                <div>
+                    <h2 id="adminTitle">Mode édition</h2>
+                    <p id="adminDesc">Saisissez le mot de passe pour activer le mode édition.</p>
+                </div>
+            </div>
+            <div class="privacy-input-wrap">
+                <input type="password" id="adminPassword" class="privacy-input" placeholder="Mot de passe d’édition" autocomplete="current-password" inputmode="text" />
+                <button id="adminTogglePwd" class="privacy-toggle" type="button" aria-label="Afficher le mot de passe">👁️</button>
+            </div>
+            <div id="adminError" class="privacy-error" role="alert" aria-live="polite"></div>
+            <button id="adminSubmit" class="privacy-submit" type="button">Déverrouiller</button>
+        </div>
+    </div>
+
+    <div class="memorial-container">
+        <!-- Hero Section -->
+        <section class="memorial-hero">
+            <div class="memorial-hero-bg" id="heroBg"></div>
+            <div class="memorial-hero-content">
+                <h1 class="memorial-name" id="memorialName">Prénom Nom</h1>
+                <div class="memorial-dates" id="memorialDates">1 Janvier 1950 - 1 Janvier 2024</div>
+                <!-- Date editor (admin edit mode) -->
+                <div id="dateEditor" style="display:none; margin-top:.5rem;">
+                    <label style="display:inline-block; margin-right:.5rem;">Naissance: <input id="editBirthdate" type="date" style="padding:.3rem; border-radius:6px; border:1px solid var(--color-border);"></label>
+                    <label style="display:inline-block;">Décès: <input id="editDeathdate" type="date" style="padding:.3rem; border-radius:6px; border:1px solid var(--color-border);"></label>
+                </div>
+                <p class="memorial-quote" id="memorialQuote">"Une citation mémorable ici."</p>
+            </div>
+        </section>
+
+        <!-- Biography Section -->
+        <section class="memorial-section" id="biographySection">
+            <h2 class="memorial-section-title">Son histoire</h2>
+            <div class="memorial-biography" id="memorialBiography">
+                <p>Ceci est un exemple de biographie. Elle sera remplacée par le texte que vous avez fourni. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="memorial-section" id="gallerySection">
+            <h2 class="memorial-section-title">Galerie de souvenirs</h2>
+            <div class="memorial-gallery" id="memorialGallery">
+                <!-- Photos will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section class="memorial-section" id="videoSection">
+            <h2 class="memorial-section-title">Vidéos</h2>
+            <div class="memorial-videos" id="memorialVideos">
+                <!-- Videos will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Anecdote Section -->
+        <section class="memorial-section" id="anecdoteSection">
+            <h2 class="memorial-section-title">Une anecdote spéciale</h2>
+            <div class="memorial-biography" id="memorialAnecdote">
+                <p>Aucune anecdote renseignée.</p>
+            </div>
+        </section>
+
+        <!-- Personality Section -->
+        <section class="memorial-section" id="personalitySection">
+            <h2 class="memorial-section-title">Sa personnalité</h2>
+            <div class="memorial-timeline" id="memorialPersonality">
+                <!-- Personality traits will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section class="memorial-section" id="locationSection">
+            <h2 class="memorial-section-title">Ses origines</h2>
+            <div class="memorial-biography" id="memorialLocation">
+                <p>Lieu de naissance non renseigné.</p>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="memorial-section" id="timelineSection">
+            <h2 class="memorial-section-title">Moments importants</h2>
+            <div class="memorial-timeline" id="memorialTimeline">
+                <!-- Timeline items will be dynamically inserted here -->
+            </div>
+        </section>
+
+    <script>
+        // --- Animated mode helpers ---
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const bodyEl = document.body;
+        const heroBgEl = document.getElementById('heroBg');
+        let obs = null; let rafId = null; let parallaxEnabled = false;
+
+        function setMode(mode) {
+            const isAnimated = (mode === 'animated');
+            const isClassic = (mode === 'classic');
+            const isSocial = (mode === 'social');
+            bodyEl.classList.toggle('mode-animated', isAnimated);
+            bodyEl.classList.toggle('mode-social', isSocial);
+            try { localStorage.setItem('memorialMode', isSocial ? 'social' : (isAnimated ? 'animated' : 'classic')); } catch(_) {}
+            const btnA = document.getElementById('btnAnimated');
+            const btnC = document.getElementById('btnClassic');
+            const btnS = document.getElementById('btnSocial');
+            if (btnA && btnC && btnS) {
+                btnA.classList.toggle('active', isAnimated);
+                btnC.classList.toggle('active', isClassic);
+                btnS.classList.toggle('active', isSocial);
+                btnA.setAttribute('aria-pressed', String(isAnimated));
+                btnC.setAttribute('aria-pressed', String(isClassic));
+                btnS.setAttribute('aria-pressed', String(isSocial));
+            }
+            if (isAnimated) { setupReveals(); setupParallax(); }
+            else { teardownReveals(); teardownParallax(); }
+        }
+
+        function setupToggle() {
+            const btnA = document.getElementById('btnAnimated');
+            const btnC = document.getElementById('btnClassic');
+            const btnS = document.getElementById('btnSocial');
+            btnA?.addEventListener('click', () => setMode('animated'));
+            btnC?.addEventListener('click', () => setMode('classic'));
+            btnS?.addEventListener('click', () => setMode('social'));
+            let saved = null; try { saved = localStorage.getItem('memorialMode'); } catch(_) {}
+            if (saved === 'classic' || saved === 'animated' || saved === 'social') {
+                setMode(saved);
+            } else {
+                setMode('animated');
+            }
+        }
+
+        function setupReveals() {
+            teardownReveals();
+            const targets = document.querySelectorAll('.memorial-section, .memorial-photo, .memorial-video, .memorial-timeline-item');
+            obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+            targets.forEach(el => { try { obs.observe(el); } catch(_) {} });
+        }
+
+        function teardownReveals() {
+            if (obs) { try { obs.disconnect(); } catch(_) {}; obs = null; }
+            document.querySelectorAll('.in-view').forEach(el => el.classList.remove('in-view'));
+        }
+
+        function setupParallax() {
+            teardownParallax();
+            // Desktop only, and skip if reduced motion
+            parallaxEnabled = window.innerWidth >= 1024 && !prefersReduced;
+            if (!parallaxEnabled) return;
+            const onScroll = () => {
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => {
+                    const y = window.scrollY || 0;
+                    const offset = Math.min(40, y * 0.06); // cap at 40px
+                    if (heroBgEl) heroBgEl.style.transform = `translateY(${offset}px)`;
+                });
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', () => { parallaxEnabled = window.innerWidth >= 1024 && !prefersReduced; if (!parallaxEnabled) teardownParallax(); });
+            onScroll();
+            // store teardown
+            setupParallax._handler = onScroll;
+        }
+
+        function teardownParallax() {
+            if (setupParallax._handler) {
+                window.removeEventListener('scroll', setupParallax._handler);
+                setupParallax._handler = null;
+            }
+            if (heroBgEl) heroBgEl.style.transform = 'translateY(0)';
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+        function setTheme(theme) {
+            // The 'elegant' theme from the form is now our default 'serene' theme.
+            const themeValue = theme === 'elegant' ? 'serene' : theme;
+            document.body.setAttribute('data-theme', themeValue);
+        }
+
+        function setTypography(font) {
+            const fontMap = {
+                'serif': "'Lora', serif",
+                'sans': "'Lato', sans-serif",
+                'playfair': "'Playfair Display', serif",
+                'inter': "'Inter', sans-serif"
+            };
+            document.documentElement.style.setProperty('--font-heading', fontMap[font] || fontMap['serif']);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        let adminEditing = false;
+        let lastData = null;
+
+        function renderMemorial(data) {
+            if (!data) return;
+            lastData = data;
+
+            // Apply customization
+            if (data.customization) {
+                if (data.customization.theme) setTheme(data.customization.theme);
+                if (data.customization.typography) setTypography(data.customization.typography);
+            }
+
+            // --- Populate Hero ---
+            document.getElementById('memorialName').textContent = data.name || 'Prénom Nom';
+            document.getElementById('memorialDates').textContent = `${formatDate(data.birthdate)} - ${formatDate(data.deathdate)}`;
+            const quoteEl = document.getElementById('memorialQuote');
+            if (data.quote) {
+                quoteEl.textContent = `"${data.quote}"`;
+                quoteEl.style.display = 'block';
+            } else {
+                quoteEl.style.display = 'none';
+            }
+            // Sync date editor inputs
+            const eb = document.getElementById('editBirthdate');
+            const ed = document.getElementById('editDeathdate');
+            if (eb) eb.value = data.birthdate || '';
+            if (ed) ed.value = data.deathdate || '';
+
+            // --- Populate Biography ---
+            const bioEl = document.getElementById('memorialBiography');
+            if (data.message) {
+                bioEl.innerHTML = `<p>${data.message.replace(/\n/g, '</p><p>')}</p>`;
+                document.getElementById('biographySection').style.display = 'block';
+            } else {
+                document.getElementById('biographySection').style.display = 'none';
+            }
+
+            // --- Populate Gallery ---
+            const galleryEl = document.getElementById('memorialGallery');
+            if (data.photoUrls && data.photoUrls.length > 0) {
+                galleryEl.innerHTML = ''; // Clear placeholders
+                const hasIdForDelete = !!((window.getMemorialId && window.getMemorialId()) || '');
+                data.photoUrls.forEach((url, idx) => {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'memorial-photo';
+                    photoDiv.draggable = adminEditing;
+                    photoDiv.dataset.index = String(idx);
+                    photoDiv.innerHTML = `<img src="${url}" alt="Souvenir">`;
+                    if (adminEditing && hasIdForDelete) {
+                        const toolbar = document.createElement('div');
+                        toolbar.style.position = 'absolute';
+                        toolbar.style.right = '8px';
+                        toolbar.style.top = '8px';
+                        toolbar.style.display = 'flex';
+                        toolbar.style.gap = '6px';
+                        const del = document.createElement('button');
+                        del.textContent = 'Supprimer';
+                        del.style.cssText = 'appearance:none;border:0;background:#b00020;color:#fff;padding:.25rem .45rem;border-radius:8px;font-weight:800;cursor:pointer;';
+                        del.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            const id = (window.getMemorialId && window.getMemorialId()) || '';
+                            if (!id) { photoDiv.remove(); showUpdateToast('Photo supprimée (prévisualisation)'); return; }
+                            try {
+                                if (window.deletePhotoUrl) await window.deletePhotoUrl(id, url);
+                                if (window.loadFromFirestoreById) await window.loadFromFirestoreById();
+                                showUpdateToast('Photo supprimée ✔');
+                            } catch(err) { console.error(err); alert('Échec de suppression'); }
+                        });
+                        toolbar.appendChild(del);
+                        photoDiv.style.position = 'relative';
+                        photoDiv.appendChild(toolbar);
+                    }
+                    galleryEl.appendChild(photoDiv);
+                });
+                document.getElementById('gallerySection').style.display = 'block';
+            } else {
+                document.getElementById('gallerySection').style.display = 'none';
+            }
+
+            // --- Populate Videos ---
+            const videosWrap = document.getElementById('memorialVideos');
+            if (data.videoUrls && data.videoUrls.length > 0) {
+                videosWrap.innerHTML = '';
+                const hasIdForDeleteV = !!((window.getMemorialId && window.getMemorialId()) || '');
+                data.videoUrls.forEach((vurl, vidx) => {
+                    const v = document.createElement('div');
+                    v.className = 'memorial-video';
+                    v.draggable = adminEditing;
+                    v.dataset.index = String(vidx);
+                    v.innerHTML = `<video controls preload="metadata" src="${vurl}"></video>`;
+                    if (adminEditing && hasIdForDeleteV) {
+                        const toolbar = document.createElement('div');
+                        toolbar.style.position = 'absolute';
+                        toolbar.style.right = '8px';
+                        toolbar.style.top = '8px';
+                        toolbar.style.display = 'flex';
+                        toolbar.style.gap = '6px';
+                        const del = document.createElement('button');
+                        del.textContent = 'Supprimer';
+                        del.style.cssText = 'appearance:none;border:0;background:#b00020;color:#fff;padding:.25rem .45rem;border-radius:8px;font-weight:800;cursor:pointer;';
+                        del.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            const id = (window.getMemorialId && window.getMemorialId()) || '';
+                            if (!id) { v.remove(); showUpdateToast('Vidéo supprimée (prévisualisation)'); return; }
+                            try {
+                                if (window.deleteVideoUrl) await window.deleteVideoUrl(id, vurl);
+                                if (window.loadFromFirestoreById) await window.loadFromFirestoreById();
+                                showUpdateToast('Vidéo supprimée ✔');
+                            } catch(err) { console.error(err); alert('Échec de suppression'); }
+                        });
+                        v.style.position = 'relative';
+                        v.appendChild(del);
+                    }
+                    videosWrap.appendChild(v);
+                });
+                document.getElementById('videoSection').style.display = 'block';
+            } else {
+                document.getElementById('videoSection').style.display = 'none';
+            }
+
+            // Attach reorder handlers when in admin edit mode
+            if (adminEditing) {
+                if (window.attachReorderHandlers) window.attachReorderHandlers();
+            }
+
+            // --- Populate Anecdote ---
+            const anecdoteEl = document.getElementById('memorialAnecdote');
+            if (data.anecdote && data.anecdote.trim()) {
+                anecdoteEl.innerHTML = `<p>${data.anecdote.replace(/\n/g, '</p><p>')}</p>`;
+                document.getElementById('anecdoteSection').style.display = 'block';
+            } else {
+                document.getElementById('anecdoteSection').style.display = 'none';
+            }
+
+            // --- Populate Personality ---
+            const personalityEl = document.getElementById('memorialPersonality');
+            if (data.selectedTraits && data.selectedTraits.length > 0) {
+                personalityEl.innerHTML = '';
+                data.selectedTraits.forEach(trait => {
+                    const traitDiv = document.createElement('div');
+                    traitDiv.className = 'memorial-timeline-item';
+                    const traitEmojis = {
+                        'généreux': '💝',
+                        'courageux': '🦁',
+                        'bienveillant': '🤗',
+                        'passionné': '🔥',
+                        'sage': '🦉',
+                        'drôle': '😄',
+                        'créatif': '🎨',
+                        'déterminé': '💪'
+                    };
+                    traitDiv.innerHTML = `
+                        <div class="memorial-timeline-date">${traitEmojis[trait] || '✨'}</div>
+                        <div class="memorial-timeline-event">${trait.charAt(0).toUpperCase() + trait.slice(1)}</div>
+                    `;
+                    personalityEl.appendChild(traitDiv);
+                });
+                document.getElementById('personalitySection').style.display = 'block';
+            } else {
+                document.getElementById('personalitySection').style.display = 'none';
+            }
+
+            // --- Populate Location ---
+            const locationEl = document.getElementById('memorialLocation');
+            if (data.birthplace && data.birthplace.trim()) {
+                locationEl.innerHTML = `<p>📍 Lieu de naissance: <strong>${data.birthplace}</strong></p>`;
+                document.getElementById('locationSection').style.display = 'block';
+            } else {
+                document.getElementById('locationSection').style.display = 'none';
+            }
+
+            // --- Populate Timeline ---
+            const timelineEl = document.getElementById('memorialTimeline');
+            if (data.timeline && data.timeline.length > 0) {
+                timelineEl.innerHTML = ''; // Clear placeholders
+                data.timeline.forEach(item => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = 'memorial-timeline-item';
+                    eventDiv.innerHTML = `
+                        <div class="memorial-timeline-date">${item.date}</div>
+                        <div class="memorial-timeline-event">${item.event}</div>
+                    `;
+                    timelineEl.appendChild(eventDiv);
+                });
+                document.getElementById('timelineSection').style.display = 'block';
+            } else {
+                 document.getElementById('timelineSection').style.display = 'none';
+            }
+            
+            // --- Set Hero Background ---
+            const heroBg = document.getElementById('heroBg');
+            const coverUrl = data.bannerUrl ? data.bannerUrl : (data.photoUrls && data.photoUrls[0] ? data.photoUrls[0] : null);
+            if (coverUrl) { heroBg.style.backgroundImage = `url(${coverUrl})`; } else { heroBg.style.backgroundImage = 'none'; }
+
+            // Populate social header from existing data
+            const socialCover = document.getElementById('socialCover');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const profileName = document.getElementById('profileName');
+            const profileDates = document.getElementById('profileDates');
+            const profileQuote = document.getElementById('profileQuote');
+            const avatarFallback = document.getElementById('avatarFallback');
+            if (socialCover) socialCover.style.backgroundImage = coverUrl ? `url(${coverUrl})` : 'none';
+            const avatarUrl = (data.photoUrls && data.photoUrls[0]) ? data.photoUrls[0] : '';
+            if (profileAvatar) {
+                profileAvatar.src = avatarUrl || '';
+                profileAvatar.alt = (data.name ? `Photo de profil de ${data.name}` : 'Photo de profil');
+                const toggleFallback = (show) => {
+                    if (!avatarFallback) return;
+                    if (show) avatarFallback.classList.add('show'); else avatarFallback.classList.remove('show');
+                    if (profileAvatar) profileAvatar.style.display = show ? 'none' : 'block';
+                };
+                // Compute initials from name
+                const nameText = (data.name || profileName?.textContent || '').trim();
+                const initials = nameText ? nameText.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase() : 'SE';
+                if (avatarFallback) avatarFallback.textContent = initials;
+                if (!avatarUrl) {
+                    toggleFallback(true);
+                } else {
+                    toggleFallback(false);
+                    profileAvatar.onerror = () => toggleFallback(true);
+                }
+            }
+            if (profileName) profileName.textContent = document.getElementById('memorialName').textContent;
+            if (profileDates) profileDates.textContent = document.getElementById('memorialDates').textContent;
+            if (profileQuote) {
+                if (data.quote) { profileQuote.textContent = `"${data.quote}"`; profileQuote.style.display = 'block'; }
+                else { profileQuote.style.display = 'none'; }
+            }
+
+            // Populate chips (birthplace, photo/video counts)
+            try {
+                const chipBirth = document.getElementById('chipBirthplace');
+                const chipPhotos = document.getElementById('chipPhotos');
+                const chipVideos = document.getElementById('chipVideos');
+                if (chipBirth) {
+                    if (data.birthplace && data.birthplace.trim()) {
+                        chipBirth.textContent = `📍 ${data.birthplace}`;
+                        chipBirth.style.display = 'inline-flex';
+                    } else {
+                        chipBirth.style.display = 'none';
+                    }
+                }
+                if (chipPhotos) {
+                    const pc = Array.isArray(data.photoUrls) ? data.photoUrls.length : 0;
+                    if (pc > 0) {
+                        chipPhotos.textContent = `📷 ${pc} ${pc > 1 ? 'photos' : 'photo'}`;
+                        chipPhotos.style.display = 'inline-flex';
+                    } else {
+                        chipPhotos.style.display = 'none';
+                    }
+                }
+                if (chipVideos) {
+                    const vc = Array.isArray(data.videoUrls) ? data.videoUrls.length : 0;
+                    if (vc > 0) {
+                        chipVideos.textContent = `🎞️ ${vc} ${vc > 1 ? 'vidéos' : 'vidéo'}`;
+                        chipVideos.style.display = 'inline-flex';
+                    } else {
+                        chipVideos.style.display = 'none';
+                    }
+                }
+            } catch(_) {}
+
+            // Share button (Web Share API, fallback clipboard)
+            try {
+                const shareBtn = document.getElementById('shareBtn');
+                if (shareBtn) {
+                    shareBtn.onclick = async () => {
+                        const title = (data.name ? `Souvenir de ${data.name}` : 'Souvenir numérique');
+                        const text = data.quote ? `"${data.quote}"` : 'Découvrez ce mémorial numérique.';
+                        const url = window.location.href;
+                        if (navigator.share) {
+                            try { await navigator.share({ title, text, url }); } catch(_) {}
+                        } else if (navigator.clipboard) {
+                            try { await navigator.clipboard.writeText(url); alert('Lien copié dans le presse-papiers'); } catch(_) { prompt('Copiez le lien:', url); }
+                        } else {
+                            prompt('Copiez le lien:', url);
+                        }
+                    };
+                }
+            } catch(_) {}
+
+            // Initialize animated mode visuals now that content is in place
+            setupToggle();
+            if (bodyEl.classList.contains('mode-animated')) {
+                setupReveals();
+                setupParallax();
+            }
+
+            // Setup privacy gate after content is ready
+            setupPrivacyGate(data).catch(()=>{});
+        }
+
+        // Listen for data from parent window (create.html)
+        window.addEventListener('message', (event) => {
+            // For security, only accept messages from the same origin
+            if (event.origin !== window.location.origin) return;
+
+            if (event.data && event.data.action === 'load-preview' && event.data.data) {
+                // Switch to modal layout (one media per row, full width)
+                document.body.classList.add('modal-view');
+                renderMemorial(event.data.data);
+            }
+        });
+
+        // --- Privacy gate logic ---
+        function getMemorialIdFromUrl() {
+            try { const p = new URLSearchParams(window.location.search); return p.get('id') || ''; } catch(_) { return ''; }
+        }
+
+        async function sha256Hex(text) {
+            const enc = new TextEncoder();
+            const buf = await crypto.subtle.digest('SHA-256', enc.encode(text));
+            const bytes = Array.from(new Uint8Array(buf));
+            return bytes.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function isPrivateMemorial(data) {
+            try {
+                const p = new URLSearchParams(window.location.search);
+                if (p.get('private') === '1') return true;
+            } catch(_) {}
+            return Boolean(
+                (data && (data.privacy === 'private' || data.isPrivate === true))
+                || (data && data.password) || (data && data.passwordHash)
+            );
+        }
+
+        async function setupPrivacyGate(data) {
+            // Do not gate inside the embedded preview from create.html
+            if (document.body.classList.contains('modal-view')) return;
+            const id = getMemorialIdFromUrl();
+            const overlay = document.getElementById('privacyOverlay');
+            const input = document.getElementById('privacyPassword');
+            const submit = document.getElementById('privacySubmit');
+            const errorEl = document.getElementById('privacyError');
+            const togglePwd = document.getElementById('privacyTogglePwd');
+
+            const unlockedKey = id ? `memorial-unlocked:${id}` : '';
+            const isPrivate = isPrivateMemorial(data);
+            if (!isPrivate) { hideOverlay(); return; }
+
+            // Check sessionStorage cache
+            try { if (unlockedKey && sessionStorage.getItem(unlockedKey) === 'true') { hideOverlay(); return; } } catch(_) {}
+
+            // Try URL param key for auto-unlock
+            try {
+                const p = new URLSearchParams(window.location.search);
+                const keyParam = p.get('key');
+                if (keyParam && await validatePassword(data, keyParam)) {
+                    try { if (unlockedKey) sessionStorage.setItem(unlockedKey, 'true'); } catch(_) {}
+                    hideOverlay();
+                    showUnlockToast();
+                    return;
+                }
+            } catch(_) {}
+
+            // Show overlay and bind
+            showOverlay();
+            if (togglePwd && input) {
+                togglePwd.addEventListener('click', () => {
+                    const isPw = input.type === 'password';
+                    input.type = isPw ? 'text' : 'password';
+                    togglePwd.setAttribute('aria-label', isPw ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+                });
+            }
+            const onSubmit = async () => {
+                errorEl.textContent = '';
+                const pwd = (input.value || '').trim();
+                if (!pwd) { errorEl.textContent = 'Mot de passe requis'; return; }
+                const ok = await validatePassword(data, pwd);
+                if (ok) {
+                    try { if (unlockedKey) sessionStorage.setItem(unlockedKey, 'true'); } catch(_) {}
+                    hideOverlay();
+                    showUnlockToast();
+                } else {
+                    errorEl.textContent = 'Mot de passe incorrect';
+                }
+            };
+            submit?.addEventListener('click', onSubmit);
+            input?.addEventListener('keydown', (e) => { if (e.key === 'Enter') onSubmit(); });
+
+            function showOverlay() {
+                bodyEl.classList.add('privacy-blur');
+                if (overlay) { overlay.style.display = 'flex'; overlay.hidden = false; }
+                setTimeout(() => { try { input?.focus(); } catch(_) {} }, 0);
+            }
+            function hideOverlay() {
+                bodyEl.classList.remove('privacy-blur');
+                if (overlay) { overlay.style.display = 'none'; overlay.hidden = true; }
+            }
+        }
+
+        async function validatePassword(data, pwd) {
+            try {
+                // Support adminPasswordHash/admin plaintext en plus du passwordHash
+                const candidates = [];
+                if (data) {
+                    if (data.passwordHash) candidates.push({ type: 'viewerHash', value: String(data.passwordHash) });
+                    if (data.adminPasswordHash) candidates.push({ type: 'adminHash', value: String(data.adminPasswordHash) });
+                    if (data.password) candidates.push({ type: 'viewerPlain', value: String(data.password) });
+                    if (data.adminPassword) candidates.push({ type: 'adminPlain', value: String(data.adminPassword) });
+                }
+
+                // Try hashed compares
+                const givenHash = (await sha256Hex(pwd)).toLowerCase();
+                for (const c of candidates) {
+                    if (c.type.endsWith('Hash')) {
+                        const target = c.value.toLowerCase().trim();
+                        if (givenHash === target) return true;
+                    }
+                }
+                // Try plaintext compares (if any)
+                for (const c of candidates) {
+                    if (c.type.endsWith('Plain')) {
+                        if (pwd === c.value) return true;
+                    }
+                }
+                // URL key (compat)
+                const p = new URLSearchParams(window.location.search);
+                const keyParam = p.get('key');
+                if (keyParam && keyParam === pwd) return true;
+            } catch(_) {}
+            return false;
+        }
+        // Update toast helpers
+        function showUpdateToast(text) {
+            const el = document.getElementById('updateToast');
+            const tx = document.getElementById('updateToastText');
+            if (!el) return;
+            if (tx) tx.textContent = text || 'Mise à jour ✔';
+            el.classList.add('show');
+            clearTimeout(showUpdateToast._t);
+            showUpdateToast._t = setTimeout(() => { el.classList.remove('show'); }, 4000);
+        }
+        document.getElementById('updateToastClose')?.addEventListener('click', () => {
+            const el = document.getElementById('updateToast');
+            if (el) el.classList.remove('show');
+        });
+
+        // Preview (no id): do NOT enable admin; show information banner instead
+        (function handlePreviewInfo(){
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const hasId = !!params.get('id');
+                if (!hasId) {
+                    // Ensure not editable and hide admin bar
+                    try { setEditable(false); } catch(_) {}
+                    const bar = document.getElementById('adminBar');
+                    if (bar) bar.style.display = 'none';
+                    const adminBtn = document.getElementById('btnAdmin');
+                    if (adminBtn) { adminBtn.setAttribute('disabled', 'true'); adminBtn.title = 'Disponible après paiement'; adminBtn.style.opacity = '.6'; }
+                    // Show information banner
+                    const banner = document.getElementById('previewBanner');
+                    if (banner) { banner.hidden = false; banner.classList.add('show'); }
+                    const closeBtn = document.getElementById('previewBannerClose');
+                    closeBtn?.addEventListener('click', () => { banner?.classList.remove('show'); banner && (banner.hidden = true); });
+                }
+            } catch(_) {}
+        })();
+    </script>
+    <script type="module">
+        import { db, storage } from './js/firebase-config.js';
+        import { doc, getDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+        import { ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js';
+
+        const DEBUG_ADMIN = true;
+        // Limites alignées sur create.html
+        const MAX_PHOTOS = 20;
+        const MAX_VIDEOS = 5;
+        const MAX_PHOTO_SIZE_MB = 10;
+        const MAX_VIDEO_SIZE_MB = 50;
+
+        async function loadFromFirestoreById() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get('id');
+                if (!id) return;
+                const snap = await getDoc(doc(db, 'souvenirs', id));
+                if (snap.exists()) {
+                    const data = snap.data();
+                    if (DEBUG_ADMIN) {
+                        console.log('[ADMIN] Loaded doc id=%s hasAdmin=%s hasViewer=%s', id, Boolean(data.adminPasswordHash), Boolean(data.passwordHash));
+                        if (data.adminPasswordHash) console.log('[ADMIN] adminHash=%s…', String(data.adminPasswordHash).slice(0,8));
+                        if (data.passwordHash) console.log('[ADMIN] viewerHash=%s…', String(data.passwordHash).slice(0,8));
+                    }
+                    renderMemorial(data);
+                    setupAdminUI(data).catch(()=>{});
+                } else {
+                    console.warn('Mémorial introuvable pour id =', id);
+                }
+            } catch (e) {
+                console.error('Erreur chargement mémorial:', e);
+            }
+        }
+
+        // Charger automatiquement si un id est présent
+        loadFromFirestoreById();
+
+        // --- Admin helpers ---
+        function getMemorialId() {
+            try { const p = new URLSearchParams(window.location.search); return p.get('id') || ''; } catch(_) { return ''; }
+        }
+
+        function setEditable(enabled) {
+            adminEditing = !!enabled;
+            const ids = ['memorialName','memorialBiography','memorialAnecdote'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.contentEditable = enabled ? 'true' : 'false'; el.style.outline = enabled ? '2px dashed #86A2B1' : ''; }
+            });
+            const quoteEl = document.getElementById('memorialQuote');
+            if (quoteEl) { quoteEl.contentEditable = enabled ? 'true' : 'false'; quoteEl.style.outline = enabled ? '2px dashed #86A2B1' : ''; }
+            const locEl = document.getElementById('memorialLocation');
+            if (locEl) { locEl.contentEditable = enabled ? 'true' : 'false'; locEl.style.outline = enabled ? '2px dashed #86A2B1' : ''; }
+            const dateEd = document.getElementById('dateEditor');
+            if (dateEd) dateEd.style.display = enabled ? 'block' : 'none';
+            // Re-render to inject admin toolbars and draggable flags
+            if (lastData) {
+                renderMemorial(lastData);
+            }
+        }
+
+        function attachReorderHandlers() {
+            const id = getMemorialId();
+            // Photos DnD
+            const photos = document.querySelectorAll('#memorialGallery .memorial-photo');
+            let draggedP = null;
+            photos.forEach(el => {
+                el.addEventListener('dragstart', (e) => { draggedP = el; el.classList.add('drag-over'); });
+                el.addEventListener('dragend', () => { draggedP?.classList.remove('drag-over'); draggedP = null; });
+                el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('drag-over'); });
+                el.addEventListener('dragleave', () => { el.classList.remove('drag-over'); });
+                el.addEventListener('drop', async (e) => {
+                    e.preventDefault();
+                    el.classList.remove('drag-over');
+                    const gallery = el.parentElement;
+                    if (!gallery || !draggedP || draggedP === el) return;
+                    gallery.insertBefore(draggedP, el);
+                    await persistPhotoOrder(id);
+                });
+            });
+            // Videos DnD
+            const videos = document.querySelectorAll('#memorialVideos .memorial-video');
+            let draggedV = null;
+            videos.forEach(el => {
+                el.addEventListener('dragstart', () => { draggedV = el; el.classList.add('drag-over'); });
+                el.addEventListener('dragend', () => { draggedV?.classList.remove('drag-over'); draggedV = null; });
+                el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('drag-over'); });
+                el.addEventListener('dragleave', () => { el.classList.remove('drag-over'); });
+                el.addEventListener('drop', async (e) => {
+                    e.preventDefault();
+                    el.classList.remove('drag-over');
+                    const wrap = el.parentElement;
+                    if (!wrap || !draggedV || draggedV === el) return;
+                    wrap.insertBefore(draggedV, el);
+                    await persistVideoOrder(id);
+                });
+            });
+        }
+
+        async function saveAdminEdits(id) {
+            // Extract values from DOM
+            const name = document.getElementById('memorialName')?.textContent.trim() || '';
+            const bio = document.getElementById('memorialBiography');
+            const message = bio ? bio.textContent.trim() : '';
+            const anec = document.getElementById('memorialAnecdote');
+            const anecdote = anec ? anec.textContent.trim() : '';
+            const quoteRaw = document.getElementById('memorialQuote')?.textContent.trim() || '';
+            const birth = document.getElementById('memorialLocation');
+            const birthplace = birth ? birth.textContent.trim() : '';
+            const bdInput = document.getElementById('editBirthdate');
+            const ddInput = document.getElementById('editDeathdate');
+            const birthdate = bdInput?.value || '';
+            const deathdate = ddInput?.value || '';
+
+            await updateDoc(doc(db, 'souvenirs', id), {
+                name,
+                message,
+                anecdote,
+                quote: quoteRaw.replace(/^\"|\"$/g, ''),
+                birthplace,
+                birthdate,
+                deathdate
+            });
+        }
+
+        function showUploadOverlay(show) {
+            const ov = document.getElementById('adminUploadOverlay');
+            if (!ov) return;
+            ov.style.display = show ? 'flex' : 'none';
+            ov.hidden = !show;
+        }
+
+        async function uploadAdminPhotos(id, files) {
+            const newUrls = [];
+            for (const file of Array.from(files || [])) {
+                if (!file.type?.startsWith('image/')) continue;
+                const sizeMB = file.size / (1024 * 1024);
+                if (sizeMB > MAX_PHOTO_SIZE_MB) { alert(`Photo "${file.name}" trop lourde (${sizeMB.toFixed(1)}MB). Maximum: ${MAX_PHOTO_SIZE_MB}MB`); continue; }
+                const storageRef = ref(storage, `souvenirs/${id}/photos/${file.name}`);
+                await uploadBytes(storageRef, file);
+                const url = await getDownloadURL(storageRef);
+                newUrls.push(url);
+            }
+            if (newUrls.length) {
+                // Merge, update Firestore, then reload the document and re-render so photos appear immédiatement
+                const snap = await getDoc(doc(db, 'souvenirs', id));
+                const data = snap.exists() ? snap.data() : {};
+                const current = Array.isArray(data.photoUrls) ? data.photoUrls : [];
+                // Enforcer limite
+                if (current.length >= MAX_PHOTOS) { alert(`Limite de ${MAX_PHOTOS} photos atteinte.`); return; }
+                const budget = MAX_PHOTOS - current.length;
+                const toAdd = newUrls.slice(0, budget);
+                await updateDoc(doc(db, 'souvenirs', id), { photoUrls: [...current, ...toAdd] });
+
+                const snap2 = await getDoc(doc(db, 'souvenirs', id));
+                if (snap2.exists()) {
+                    const updated = snap2.data();
+                    // Re-render full memorial to ensure UI shows new photos sans attendre "Enregistrer"
+                    renderMemorial(updated);
+                    // Re-init admin UI so la barre reste et les contrôles sont réattachés
+                    setupAdminUI(updated).catch(()=>{});
+                    showUpdateToast('Photos ajoutées ✔');
+                }
+            }
+        }
+
+        async function uploadAdminVideos(id, files) {
+            const newUrls = [];
+            for (const file of Array.from(files || [])) {
+                if (!file.type?.startsWith('video/')) continue;
+                const sizeMB = file.size / (1024 * 1024);
+                if (sizeMB > MAX_VIDEO_SIZE_MB) { alert(`Vidéo "${file.name}" trop lourde (${sizeMB.toFixed(1)}MB). Maximum: ${MAX_VIDEO_SIZE_MB}MB`); continue; }
+                const storageRef = ref(storage, `souvenirs/${id}/videos/${file.name}`);
+                await uploadBytes(storageRef, file);
+                const url = await getDownloadURL(storageRef);
+                newUrls.push(url);
+            }
+            if (newUrls.length) {
+                const snap = await getDoc(doc(db, 'souvenirs', id));
+                const data = snap.exists() ? snap.data() : {};
+                const current = Array.isArray(data.videoUrls) ? data.videoUrls : [];
+                if (current.length >= MAX_VIDEOS) { alert(`Limite de ${MAX_VIDEOS} vidéos atteinte.`); return; }
+                const budget = MAX_VIDEOS - current.length;
+                const toAdd = newUrls.slice(0, budget);
+                await updateDoc(doc(db, 'souvenirs', id), { videoUrls: [...current, ...toAdd] });
+
+                const snap2 = await getDoc(doc(db, 'souvenirs', id));
+                if (snap2.exists()) {
+                    const updated = snap2.data();
+                    renderMemorial(updated);
+                    setupAdminUI(updated).catch(()=>{});
+                    showUpdateToast('Vidéos ajoutées ✔');
+                }
+            }
+        }
+
+        // Persist helpers (order/delete)
+        function getCurrentPhotoOrder() {
+            return Array.from(document.querySelectorAll('#memorialGallery .memorial-photo img')).map(img => img.src);
+        }
+        function getCurrentVideoOrder() {
+            return Array.from(document.querySelectorAll('#memorialVideos .memorial-video video')).map(v => v.src);
+        }
+
+        async function persistPhotoOrder(id) {
+            if (!id) { showUpdateToast('Ordre mis à jour (prévisualisation)'); return; }
+            const order = getCurrentPhotoOrder();
+            await updateDoc(doc(db, 'souvenirs', id), { photoUrls: order });
+            showUpdateToast('Ordre des photos mis à jour ✔');
+        }
+        async function persistVideoOrder(id) {
+            if (!id) { showUpdateToast('Ordre mis à jour (prévisualisation)'); return; }
+            const order = getCurrentVideoOrder();
+            await updateDoc(doc(db, 'souvenirs', id), { videoUrls: order });
+            showUpdateToast('Ordre des vidéos mis à jour ✔');
+        }
+        async function deletePhotoUrl(id, url) {
+            const snap = await getDoc(doc(db, 'souvenirs', id));
+            if (!snap.exists()) return;
+            const data = snap.data();
+            const list = (data.photoUrls || []).filter(u => u !== url);
+            await updateDoc(doc(db, 'souvenirs', id), { photoUrls: list });
+            try { await deleteObject(ref(storage, url)); } catch(_) {}
+        }
+        async function deleteVideoUrl(id, url) {
+            const snap = await getDoc(doc(db, 'souvenirs', id));
+            if (!snap.exists()) return;
+            const data = snap.data();
+            const list = (data.videoUrls || []).filter(u => u !== url);
+            await updateDoc(doc(db, 'souvenirs', id), { videoUrls: list });
+            try { await deleteObject(ref(storage, url)); } catch(_) {}
+        }
+
+        async function setupAdminUI(data) {
+            const id = getMemorialId();
+            if (!id) return;
+            const btn = document.getElementById('btnAdmin');
+            const bar = document.getElementById('adminBar');
+            const overlay = document.getElementById('adminOverlay');
+            const pwdInput = document.getElementById('adminPassword');
+            const togglePwd = document.getElementById('adminTogglePwd');
+            const submitBtn = document.getElementById('adminSubmit');
+            const errEl = document.getElementById('adminError');
+            const toggleEditBtn = document.getElementById('adminToggleEdit');
+            const saveBtn = document.getElementById('adminSave');
+            const addPhotosInput = document.getElementById('adminAddPhotos');
+            const addVideosInput = document.getElementById('adminAddVideos');
+            const logoutBtn = document.getElementById('adminLogout');
+
+            const key = `memorial-admin:${id}`;
+
+            function showBar() {
+                const el = document.getElementById('adminBar');
+                if (!el) return;
+                el.style.display = 'flex';
+            }
+            function hideBar() {
+                const el = document.getElementById('adminBar');
+                if (!el) return;
+                el.style.display = 'none';
+            }
+            function openOverlay() {
+                const ov = document.getElementById('adminOverlay');
+                if (!ov) { alert('Interface administrateur indisponible. Veuillez actualiser la page.'); return; }
+                ov.style.display = 'flex';
+                ov.hidden = false;
+                setTimeout(()=>{ try { document.getElementById('adminPassword')?.focus(); } catch(_) {} }, 0);
+            }
+            function closeOverlay() {
+                const ov = document.getElementById('adminOverlay');
+                if (!ov) return;
+                ov.style.display = 'none';
+                ov.hidden = true;
+                if (errEl) errEl.textContent = '';
+            }
+
+            if (togglePwd && pwdInput) {
+                togglePwd.addEventListener('click', () => {
+                    const isPw = pwdInput.type === 'password';
+                    pwdInput.type = isPw ? 'text' : 'password';
+                    togglePwd.setAttribute('aria-label', isPw ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+                });
+            }
+
+            async function tryUnlock(pwd) {
+                try {
+                    // 0) Si la même fonction que le privé/public est dispo, on l'utilise pour parité totale
+                    if (typeof window.validatePassword === 'function') {
+                        const ok = await window.validatePassword(data, pwd);
+                        if (DEBUG_ADMIN) console.log('[ADMIN] validatePassword result=%s', ok);
+                        if (ok) return true;
+                    }
+                    // 1) Sinon, fallback: comparer adminPasswordHash
+                    const given = (await (await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd))).then(b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join(''))).toLowerCase();
+                    const hasAdmin = Boolean(data && data.adminPasswordHash);
+                    const hasViewer = Boolean(data && data.passwordHash);
+                    if (DEBUG_ADMIN) console.log('[ADMIN] tryUnlock(fallback): hasAdmin=%s hasViewer=%s givenHash=%s…', hasAdmin, hasViewer, given?.slice(0,8));
+                    if (hasAdmin) {
+                        const target = String(data.adminPasswordHash).toLowerCase().trim();
+                        const ok = given === target;
+                        if (DEBUG_ADMIN) console.log('[ADMIN] compare admin: target=%s… match=%s', target?.slice(0,8), ok);
+                        if (ok) return true;
+                    }
+                    if (hasViewer) {
+                        const targetViewer = String(data.passwordHash).toLowerCase().trim();
+                        const okV = given === targetViewer;
+                        if (DEBUG_ADMIN) console.log('[ADMIN] compare viewer: target=%s… match=%s', targetViewer?.slice(0,8), okV);
+                        if (okV) return true;
+                    }
+                    return false;
+                } catch(_) { return false; }
+            }
+
+            function sanitizePwd(rawInput) {
+                // Normaliser unicode, retirer guillemets droits/typographiques et espaces/espaces insécables/zero-width en bordure
+                const normalized = (rawInput || '').normalize('NFKC');
+                const stripEdges = normalized.replace(/^[\s\u00A0\u200B-\u200D\uFEFF"'\u2018\u2019\u201C\u201D]+|[\s\u00A0\u200B-\u200D\uFEFF"'\u2018\u2019\u201C\u201D]+$/g, '');
+                return stripEdges;
+            }
+
+            async function tryUnlockVariants(rawInput) {
+                const vSan = sanitizePwd(rawInput);
+                const vTrim = (rawInput || '').trim();
+                const variants = [vSan];
+                if (vTrim !== vSan) variants.push(vTrim);
+                if (rawInput !== vTrim) variants.push(rawInput);
+                for (const v of variants) {
+                    if (DEBUG_ADMIN) console.log('[ADMIN] try variant len=%d sample="%s"', v.length, v.slice(0,4)+'…');
+                    const ok = await tryUnlock(v);
+                    if (ok) return true;
+                }
+                return false;
+            }
+
+            async function handleUnlock() {
+                errEl.textContent = '';
+                const raw = (pwdInput.value || '');
+                if (DEBUG_ADMIN) console.log('[ADMIN] handleUnlock: rawLen=%d', raw.length);
+                const ok = await tryUnlockVariants(raw);
+                if (ok) {
+                    try { sessionStorage.setItem(key, 'true'); } catch(_) {}
+                    closeOverlay();
+                    showBar();
+                } else {
+                    errEl.textContent = 'Mot de passe administrateur incorrect';
+                }
+            }
+
+            submitBtn?.addEventListener('click', handleUnlock);
+            pwdInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleUnlock(); });
+
+            btn?.addEventListener('click', () => {
+                try {
+                    if (sessionStorage.getItem(key) === 'true') {
+                        showBar();
+                    } else {
+                        openOverlay();
+                    }
+                } catch(_) { openOverlay(); }
+            });
+
+            toggleEditBtn?.addEventListener('click', () => {
+                const enabled = document.getElementById('memorialName')?.getAttribute('contenteditable') !== 'true';
+                setEditable(enabled);
+            });
+
+            saveBtn?.addEventListener('click', async () => {
+                saveBtn.disabled = true;
+                try { await saveAdminEdits(id); showUpdateToast('Mémorial mis à jour ✔'); await loadFromFirestoreById(); } catch(e) { alert('Échec de sauvegarde'); console.error(e); } finally { saveBtn.disabled = false; }
+            });
+
+            addPhotosInput?.addEventListener('change', async (e) => {
+                const files = e.target.files;
+                if (!files || !files.length) return;
+                addPhotosInput.disabled = true;
+                addVideosInput && (addVideosInput.disabled = true);
+                showUploadOverlay(true);
+                try { await uploadAdminPhotos(id, files); } catch(e) { console.error(e); alert('Échec upload photos'); } finally { addPhotosInput.disabled = false; addVideosInput && (addVideosInput.disabled = false); addPhotosInput.value=''; showUploadOverlay(false); }
+            });
+
+            addVideosInput?.addEventListener('change', async (e) => {
+                const files = e.target.files;
+                if (!files || !files.length) return;
+                addVideosInput.disabled = true;
+                addPhotosInput && (addPhotosInput.disabled = true);
+                showUploadOverlay(true);
+                try { await uploadAdminVideos(id, files); } catch(e) { console.error(e); alert('Échec upload vidéos'); } finally { addVideosInput.disabled = false; addPhotosInput && (addPhotosInput.disabled = false); addVideosInput.value=''; showUploadOverlay(false); }
+            });
+
+            logoutBtn?.addEventListener('click', () => {
+                try { sessionStorage.removeItem(key); } catch(_) {}
+                hideBar();
+                setEditable(false);
+            });
+
+            // Auto-show if previously unlocked
+            try { if (sessionStorage.getItem(key) === 'true') showBar(); } catch(_) {}
+
+            // Auto-unlock from URL param adminkey (plaintext, comme 'key' pour la confidentialité)
+            try {
+                const p = new URLSearchParams(window.location.search);
+                const adminKeyRaw = (p.get('adminkey') || '');
+                if (adminKeyRaw) {
+                    if (DEBUG_ADMIN) console.log('[ADMIN] adminkey param détecté');
+                    const ok = await tryUnlockVariants(adminKeyRaw);
+                    if (ok) {
+                        try { sessionStorage.setItem(key, 'true'); } catch(_) {}
+                        showBar();
+                    } else if (DEBUG_ADMIN) {
+                        console.log('[ADMIN] adminkey param invalide');
+                    }
+                }
+            } catch(_) {}
+        }
+        // Expose selected helpers globally for use in non-module script
+        try {
+            window.getMemorialId = getMemorialId;
+            window.attachReorderHandlers = attachReorderHandlers;
+            window.deletePhotoUrl = deletePhotoUrl;
+            window.deleteVideoUrl = deleteVideoUrl;
+            window.persistPhotoOrder = persistPhotoOrder;
+            window.persistVideoOrder = persistVideoOrder;
+            window.loadFromFirestoreById = loadFromFirestoreById;
+        } catch(_) {}
+    </script>
+    <script src="js/cookie-consent.js" defer></script>
+    <script src="/js/internal-linking.js"></script>
+</body>
+</html>

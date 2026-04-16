@@ -1,0 +1,23 @@
+# llms.txt for Souvenir QR
+site: https://souvenir-qr.com/
+brand: Souvenir QR
+summary: Service de mémorial numérique avec QR code. Pack 59,99 € incluant 2 QR (garantie 10 ans cumulée). Création d'un espace souvenir (photos, vidéos, hommages) accessible par scan. Livraison France. Remise 5% via codes partenaires.
+key_pages:
+  - https://souvenir-qr.com/
+  - https://souvenir-qr.com/create.html
+  - https://souvenir-qr.com/partenaires/
+  - https://souvenir-qr.com/guide.html
+languages: [fr, en]
+contact:
+  email: souvenirqrfrance@gmail.com
+  support_hours: "24–48 h ouvrées"
+entities:
+  product: "Pack QR Code Mémorial Souvenir QR"
+  organization: "Souvenir QR"
+  topics: ["Mémorial numérique", "QR code funéraire", "Hommage en ligne", "Souvenirs", "Photos et vidéos", "Plaque funéraire"]
+policy:
+  privacy: https://souvenir-qr.com/privacy.html
+  terms: https://souvenir-qr.com/terms.html
+  legal: https://souvenir-qr.com/legal.html
+license: Content may be quoted with attribution and link to https://souvenir-qr.com/
+last_updated: 2025-10-02

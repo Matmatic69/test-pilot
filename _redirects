@@ -1,0 +1,51 @@
+# Redirects for Netlify
+# Fix SPA routing while preserving static files
+
+# API redirects (if any)
+# /api/* /.netlify/functions/:splat 200
+
+# Specific page redirects (only for non-existent pages)
+# /non-existent-page /index.html 200
+
+# All other requests should be handled by the static files
+# This prevents the SPA catch-all from interfering with SEO
+
+# Clean URLs -> .html mappings (ensure both work)
+/en /en/ 301
+/partenaires /partenaires/ 301
+
+/create /create.html 301
+/guide /guide.html 301
+/faq /faq.html 301
+/contact /contact.html 301
+/a-propos /a-propos.html 301
+/plan-du-site /plan-du-site.html 301
+/privacy /privacy.html 301
+/terms /terms.html 301
+/legal /legal.html 301
+/cookies /cookies.html 301
+/zones-desservies /zones-desservies.html 301
+/eternelis-partenaire /eternelis-partenaire.html 301
+
+/pages-commemoratives /pages-commemoratives.html 301
+/qr-code-tombe /qr-code-tombe.html 301
+/qr-code-cimetiere /qr-code-cimetiere.html 301
+/qr-code-memorial /qr-code-memorial.html 301
+/qr-code-memorial-prix /qr-code-memorial-prix.html 301
+/qr-code-memorial-lyon /qr-code-memorial-lyon.html 301
+/qr-code-memorial-paris /qr-code-memorial-paris.html 301
+/qr-code-memorial-marseille /qr-code-memorial-marseille.html 301
+/qr-code-memorial-toulouse /qr-code-memorial-toulouse.html 301
+/qr-code-loyasse /qr-code-loyasse.html 301
+/qr-code-montparnasse /qr-code-montparnasse.html 301
+/qr-code-pere-lachaise /qr-code-pere-lachaise.html 301
+/qr-code-terre-cabade /qr-code-terre-cabade.html 301
+
+# Guides et Blog
+/guides/poser-qr /guides/poser-qr.html 301
+/guides/rediger-hommage /guides/rediger-hommage.html 301
+/blog/comment-creer-hommage-numerique /blog/comment-creer-hommage-numerique.html 301
+/blog/entretien-qr-code-memorial /blog/entretien-qr-code-memorial.html 301
+/blog/qr-memorial-vs-plaque-traditionnelle /blog/qr-memorial-vs-plaque-traditionnelle.html 301
+/blog/reglementation-qr-code-cimetiere /blog/reglementation-qr-code-cimetiere.html 301
+/blog/temoignages-familles-qr-memorial /blog/temoignages-familles-qr-memorial.html 301

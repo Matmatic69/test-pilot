@@ -1,0 +1,17 @@
+{
+  "name": "souvenir-qr",
+  "version": "1.0.0",
+  "description": "Application de mémorial numérique",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx netlify dev --dir . --functions netlify/functions",
+    "deploy": "npx netlify deploy --prod --dir . --functions netlify/functions"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "stripe": "^14.23.0"
+  }
+}
