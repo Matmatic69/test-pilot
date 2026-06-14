@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>StarryMemory — Botanical &amp; Plant Art</title>
+    <link>https://www.etsy.com/shop/StarryMemory</link>
+    <description>Premium wall art prints — printed to order, free worldwide shipping.</description>
+    <language>en</language>
+    <item>
+      <title>Feuilles Ocre</title>
+      <link>https://www.etsy.com/listing/4515323864</link>
+      <guid isPermaLink="false">sm-4515323864-botanical-plant</guid>
+      <description>Feuilles Ocre — premium wall art print on museum-grade matte paper. Free worldwide shipping, sizes 15x20 to 70x100 cm. botanical &amp; plant art for living room, bedroom or gallery wall. wall art print, print wall art, home decor, poster art.</description>
+      <media:content url="https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/img/feuilles-ocre.jpg" medium="image" type="image/jpeg"/>
+      <media:thumbnail url="https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/img/feuilles-ocre.jpg"/>
+      <enclosure url="https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/img/feuilles-ocre.jpg" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>Feuilles Ocre — Art Print</title>
+      <link>https://www.etsy.com/listing/4515323864</link>
+      <guid isPermaLink="false">sm-4515323864-botanical-plant-art</guid>
+      <description>Feuilles Ocre — premium wall art print on museum-grade matte paper. Free worldwide shipping, sizes 15x20 to 70x100 cm. botanical &amp; plant art for living room, bedroom or gallery wall. wall art print, print wall art, home decor, poster art.</description>
+      <media:content url="https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/img/feuilles-ocre-art.jpg" medium="image" type="image/jpeg"/>
+      <media:thumbnail url="https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/img/feuilles-ocre-art.jpg"/>
+      <enclosure url="https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/img/feuilles-ocre-art.jpg" type="image/jpeg"/>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+{
+ "La Dolce Vita Prints": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed-la-dolce-vita.xml",
+  "pins": 22
+ },
+ "Travel Posters & Wall Art": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed.xml",
+  "pins": 308
+ },
+ "Abstract & Boho Art": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed-abstract-boho.xml",
+  "pins": 12
+ },
+ "Botanical & Plant Art": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed-botanical-plant.xml",
+  "pins": 2
+ },
+ "Japandi Wall Art": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed-japandi.xml",
+  "pins": 32
+ },
+ "Cocktail & Bar Prints": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed-cocktail-bar.xml",
+  "pins": 36
+ },
+ "Cat & Animal Art": {
+  "feed": "https://cdn.jsdelivr.net/gh/Matmatic69/test-pilot@pins/pins-feed-cat-animal.xml",
+  "pins": 16
+ }
+}
